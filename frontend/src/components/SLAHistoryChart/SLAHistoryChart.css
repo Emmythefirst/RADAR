@@ -1,0 +1,11 @@
+.sla-chart-container {
+  background: rgba(30, 41, 59, 0.6);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.chart-loading {
+  text-align: center;
+  padding: 2rem;
+  color: #94a3b8;
+}

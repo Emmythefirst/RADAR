@@ -1,0 +1,15 @@
+.sla-history table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sla-history th,
+.sla-history td {
+  padding: 0.5rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.sla-excellent { color: #22c55e; font-weight: 600; }
+.sla-good { color: #84cc16; }
+.sla-degraded { color: #f59e0b; }
+.sla-unhealthy { color: #ef4444; }

@@ -1,0 +1,119 @@
+/* Theme Variables - Add this to your project */
+
+:root {
+  /* Default to Dark Theme */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --bg-card: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-tertiary: #64748b;
+  
+  --border-primary: rgba(148, 163, 184, 0.1);
+  --border-secondary: rgba(148, 163, 184, 0.2);
+  
+  /* Primary Accent - Orange for both themes */
+  --accent-primary: #f97316;
+  --accent-primary-hover: #ea580c;
+  --accent-primary-light: rgba(249, 115, 22, 0.1);
+  --accent-primary-glow: rgba(249, 115, 22, 0.3);
+  
+  /* Secondary Accent */
+  --accent-secondary: #fb923c;
+  --accent-secondary-hover: #f97316;
+  
+  /* Status Colors */
+  --status-online: #10b981;
+  --status-offline: #ef4444;
+  --status-degraded: #f59e0b;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.3);
+  --shadow-accent: 0 4px 6px -1px var(--accent-primary-glow),
+                    0 2px 4px -1px var(--accent-primary-glow);
+  
+  /* Gradient */
+  --gradient-primary: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-primary-hover) 100%);
+  --gradient-card: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+}
+
+/* Light Theme - Beige Mode */
+[data-theme="light"] {
+  --bg-primary: #f5f1e8;
+  --bg-secondary: #faf8f3;
+  --bg-tertiary: #e8dfd0;
+  --bg-card: linear-gradient(135deg, #faf8f3 0%, #f5f1e8 100%);
+  
+  /* MUCH DARKER TEXT for better readability */
+  --text-primary: #0a0806;
+  --text-secondary: #2d1f14;
+  --text-tertiary: #4a3828;
+  
+  /* DARKER BORDERS */
+  --border-primary: rgba(42, 28, 14, 0.25);
+  --border-secondary: rgba(42, 28, 14, 0.4);
+  
+  /* Shadows for light mode */
+  --shadow-sm: 0 2px 4px rgba(10, 8, 6, 0.12);
+  --shadow-md: 0 4px 8px rgba(10, 8, 6, 0.18);
+  --shadow-lg: 0 10px 20px rgba(10, 8, 6, 0.25);
+  --shadow-accent: 0 4px 6px -1px rgba(249, 115, 22, 0.35),
+                    0 2px 4px -1px rgba(249, 115, 22, 0.25);
+  
+  /* Gradient card for light mode */
+  --gradient-card: linear-gradient(135deg, #faf8f3 0%, #f5f1e8 100%);
+}
+
+/* Smooth transitions for theme changes */
+* {
+  transition: background-color 0.3s ease, 
+              color 0.3s ease, 
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+}
+
+/* Disable transitions on page load */
+.preload * {
+  transition: none !important;
+}
+
+/* Global Styles */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-primary);
+  border-radius: 6px;
+  border: 2px solid var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary-hover);
+}
+
+/* Selection */
+::selection {
+  background-color: var(--accent-primary-light);
+  color: var(--accent-primary);
+}
