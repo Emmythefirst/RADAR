@@ -2,8 +2,6 @@
 
 A comprehensive real-time analytics dashboard for monitoring and managing Xandeum pNode network performance, built with React and Node.js.
 
-![Dashboard Preview](./screenshots/dashboard.png)
-
 ## 🌟 Features
 
 ### Core Functionality
@@ -372,7 +370,7 @@ cron.schedule('*/30 * * * * *', async () => {
 - Ensure authorized redirect URIs are set
 
 **No Nodes Showing**
-- Check `KNOWN_PNODES` environment variable
+- Check `KNOWN_PNODES` environment variable and ensure port is set to :6000
 - Verify pNode endpoints are accessible
 - Check backend logs for gossip fetch errors
 
@@ -396,47 +394,9 @@ The platform includes several optimization features:
 - Secure cookie handling
 - CORS protection
 
-## 🚀 Deployment
-
-### Deploying to Production
-
-1. **Build the frontend**
-```bash
-cd frontend
-npm run build
-```
-
-2. **Set production environment variables**
-
-3. **Deploy backend** (e.g., to Heroku, DigitalOcean, AWS)
-
-4. **Deploy frontend** (e.g., to Netlify, Vercel, S3)
-
-5. **Configure DNS and SSL certificates**
-
-### Recommended Hosting
-
-- **Backend**: Heroku, DigitalOcean, AWS EC2, Railway
-- **Frontend**: Netlify, Vercel, AWS S3 + CloudFront
-- **Database**: MongoDB Atlas (managed)
-
-## 📝 License
-
-This project is licensed under the MIT License.
-
-## 👥 Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
 ## 📧 Support
 
-For questions or support, please open an issue on GitHub or contact [your-email@example.com]
+For questions or support, please open an issue on GitHub or contact @ehonemmanuel7@gmail.com
 
 ## 🙏 Acknowledgments
 
