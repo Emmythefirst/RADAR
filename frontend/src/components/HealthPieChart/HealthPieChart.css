@@ -68,7 +68,7 @@
   margin-left: 0.25rem;
 }
 
-/* Responsive */
+
 @media (max-width: 640px) {
   .health-legend {
     flex-direction: column;

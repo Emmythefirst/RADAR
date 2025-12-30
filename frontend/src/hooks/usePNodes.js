@@ -1,14 +1,13 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import api from '../services/api';
 
-// Local cache for the hook
 const nodeCache = {
   data: [],
   timestamp: 0,
   filters: ''
 };
 
-const CACHE_DURATION = 2 * 60 * 1000; // 2 minutes
+const CACHE_DURATION = 2 * 60 * 1000; 
 
 export const usePNodes = (filters = {}) => {
   const [nodes, setNodes] = useState([]);
@@ -25,13 +24,12 @@ export const usePNodes = (filters = {}) => {
       abortControllerRef.current.abort();
     }
 
-    // Create new abort controller
     abortControllerRef.current = new AbortController();
 
     try {
       setError(null);
 
-      // Clean filters
+      // filters
       const cleanFilters = Object.entries(filters).reduce((acc, [key, value]) => {
         if (value !== undefined && value !== null && value !== '') {
           acc[key] = value;
@@ -55,7 +53,6 @@ export const usePNodes = (filters = {}) => {
         return;
       }
 
-      // Set loading states
       if (!hasLoadedOnce.current) {
         setLoading(true);
       } else if (!silent) {
@@ -67,7 +64,7 @@ export const usePNodes = (filters = {}) => {
       const params = new URLSearchParams(cleanFilters).toString();
       const res = await api.get(`/pnodes?${params}`, {
         signal: abortControllerRef.current.signal,
-        timeout: 15000 // 15 second timeout
+        timeout: 15000 
       });
 
       if (res.data?.success) {
@@ -92,7 +89,6 @@ export const usePNodes = (filters = {}) => {
       console.error('Error fetching pNodes:', err);
       setError('Failed to load nodes');
 
-      // Use cache on error if available
       if (nodeCache.data.length > 0 && nodeCache.filters === JSON.stringify(filters)) {
         console.log('⚠️ Using cached data due to error');
         setNodes(nodeCache.data);
@@ -112,7 +108,6 @@ export const usePNodes = (filters = {}) => {
   useEffect(() => {
     fetchNodes(false);
 
-    // Cleanup
     return () => {
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();

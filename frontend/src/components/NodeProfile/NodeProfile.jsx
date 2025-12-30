@@ -18,7 +18,6 @@ const NodeProfile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Determine where to go back
   const previousPage = location.state?.from || '/leaderboard';
 
   useEffect(() => {
@@ -40,7 +39,7 @@ const NodeProfile = () => {
         // Increased timeout to 30 seconds for slow backend
         const res = await api.get(`/pnodes/${decodedNodeId}`, {
           headers: token ? { Authorization: `Bearer ${token}` } : {},
-          timeout: 30000 // 30 seconds
+          timeout: 30000 
         });
 
         console.log('✅ API Response:', res.data);
@@ -267,7 +266,6 @@ const NodeProfile = () => {
         </div>
 
         <section className="sla-section">
-          <h3>SLA History</h3>
           <SLAHistory uptime={uptimeHistory} />
         </section>
       </div>

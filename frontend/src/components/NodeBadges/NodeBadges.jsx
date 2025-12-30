@@ -2,10 +2,6 @@ import React from 'react';
 import { badgeToEmoji } from '../../utils/badgeToEmoji';
 import './NodeBadges.css';
 
-/**
- * Legacy / descriptive badges (text-based)
- * These are OPTIONAL and still supported
- */
 const BADGES = {
   high_uptime: { label: '99.9% SLA', color: 'green' },
   reliable_veteran: { label: 'Veteran', color: 'blue' },
@@ -35,7 +31,7 @@ const NodeBadges = ({
         </span>
       )}
 
-      {/* Top 1% badge (explicit flag) */}
+      {/* Top 1% badge */}
       {isTopOnePercent && (
         <span
           className="node-badge badge-emoji"

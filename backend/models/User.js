@@ -66,4 +66,13 @@ userSchema.methods.comparePassword = async function(candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password);
 };
 
+// ✅ Ensure watchlist is always an array when converting to JSON
+userSchema.methods.toJSON = function() {
+  const obj = this.toObject();
+  if (!Array.isArray(obj.watchlist)) {
+    obj.watchlist = [];
+  }
+  return obj;
+};
+
 module.exports = mongoose.model('User', userSchema);

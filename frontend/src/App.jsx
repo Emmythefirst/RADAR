@@ -13,7 +13,7 @@ import Signup from './components/Auth/Signup';
 import { AppProvider } from './contexts/AppContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
-import './theme.css'; // Import theme variables
+import './theme.css'; 
 import './App.css';
 
 // Protected Route Component
@@ -57,7 +57,6 @@ const PublicRoute = ({ children }) => {
 };
 
 function AppRoutes() {
-  // Remove preload class after initial render
   useEffect(() => {
     document.body.classList.remove('preload');
   }, []);
@@ -129,7 +128,6 @@ function AppRoutes() {
 }
 
 function App() {
-  // Add preload class on initial mount
   useEffect(() => {
     document.body.classList.add('preload');
   }, []);

@@ -19,7 +19,6 @@ export const useApp = () => {
   return context;
 };
 
-// Cache duration: 5 minutes
 const CACHE_DURATION = 5 * 60 * 1000;
 
 export const AppProvider = ({ children }) => {
@@ -28,7 +27,6 @@ export const AppProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [notifications, setNotifications] = useState([]);
 
-  // Cache management
   const cacheRef = useRef({
     nodes: { data: [], timestamp: 0 },
     stats: { data: null, timestamp: 0 }
@@ -42,10 +40,6 @@ export const AppProvider = ({ children }) => {
     const cache = cacheRef.current[cacheType];
     return Date.now() - cache.timestamp < CACHE_DURATION;
   };
-
-  /* ===========================
-     Fetch Functions with Caching
-     =========================== */
 
   const fetchNodes = useCallback(async (silent = false, forceRefresh = false) => {
     // Return cached data if valid and not forcing refresh
@@ -85,7 +79,7 @@ export const AppProvider = ({ children }) => {
       }
     } catch (error) {
       console.error('Error fetching nodes:', error);
-      // Use cached data on error if available
+      
       if (cacheRef.current.nodes.data.length > 0) {
         console.log('⚠️ Using stale cache due to error');
         setNodes(cacheRef.current.nodes.data);
@@ -110,7 +104,7 @@ export const AppProvider = ({ children }) => {
       const response = await api.get('/pnodes/stats/network');
       
       if (response.data?.success) {
-        // Update state and cache
+        
         setNetworkStats(response.data.data);
         cacheRef.current.stats = {
           data: response.data.data,
@@ -120,17 +114,12 @@ export const AppProvider = ({ children }) => {
       }
     } catch (error) {
       console.error('Error fetching network stats:', error);
-      // Use cached data on error if available
       if (cacheRef.current.stats.data) {
         console.log('⚠️ Using stale stats cache due to error');
         setNetworkStats(cacheRef.current.stats.data);
       }
     }
   }, []);
-
-  /* ===========================
-     Initial Load
-     =========================== */
 
   useEffect(() => {
     const loadInitialData = async () => {
@@ -160,10 +149,7 @@ export const AppProvider = ({ children }) => {
     loadInitialData();
   }, [fetchNodes, fetchNetworkStats]);
 
-  /* ===========================
-     WebSocket Setup
-     =========================== */
-
+  //web socket
   useEffect(() => {
     const socketUrl = process.env.REACT_APP_WS_URL || 'ws://localhost:5000';
 
@@ -198,10 +184,7 @@ export const AppProvider = ({ children }) => {
     };
   }, [fetchNodes, fetchNetworkStats]);
 
-  /* ===========================
-     Notifications
-     =========================== */
-
+//Notification
   const addNotification = (notification) => {
     setNotifications(prev => [
       { id: Date.now(), ...notification },
@@ -215,9 +198,7 @@ export const AppProvider = ({ children }) => {
     );
   };
 
-  /* ===========================
-     Clear Cache (for debugging)
-     =========================== */
+  //Clear Cache (for debugging)
 
   const clearCache = useCallback(() => {
     cacheRef.current = {
@@ -226,10 +207,6 @@ export const AppProvider = ({ children }) => {
     };
     console.log('🗑️ Cache cleared');
   }, []);
-
-  /* ===========================
-     Context Value
-     =========================== */
 
   const value = {
     nodes,

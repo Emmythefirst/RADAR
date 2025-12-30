@@ -1,6 +1,3 @@
-/**
- * Returns an emoji badge based on uptime percentage
- */
 export const getUptimeBadge = (uptime) => {
   if (typeof uptime !== 'number') return '🆕';
 

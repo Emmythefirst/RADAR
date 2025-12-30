@@ -43,7 +43,6 @@
   50% { transform: scale(1.05); }
 }
 
-/* Desktop Menu */
 .navbar-menu {
   display: flex;
   gap: 0.5rem;
@@ -93,14 +92,12 @@
   border-radius: 2px;
 }
 
-/* Actions */
 .navbar-actions {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-/* Notifications */
 .navbar-notifications {
   position: relative;
 }
@@ -169,7 +166,6 @@
   color: var(--text-tertiary);
 }
 
-/* User Menu */
 .user-menu-container {
   position: relative;
 }
@@ -279,7 +275,6 @@
   color: #dc2626;
 }
 
-/* Auth Buttons */
 .auth-buttons {
   display: flex;
   gap: 0.75rem;
@@ -317,7 +312,6 @@
   box-shadow: 0 6px 12px var(--accent-primary-glow);
 }
 
-/* Mobile Menu Toggle */
 .mobile-menu-toggle {
   display: flex;
   align-items: center;
@@ -342,7 +336,6 @@
   }
 }
 
-/* Mobile Menu */
 .mobile-menu {
   display: flex;
   flex-direction: column;

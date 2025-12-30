@@ -6,6 +6,7 @@ const logger = require('../utils/logger');
 const { calculateReputationScore, assignBadges } = require('../utils/reputationScore');
 const { getLocationFromIP } = require('../utils/geoLocation');
 const { getNodeSLAPercentile } = require('../utils/slaPercentile');
+const uptimeService = require('./uptimeService');
 
 // Generate readable node names
 const generatedIds = new Set();
@@ -69,7 +70,25 @@ async function fetchGossipNodes() {
         }
 
         // STATUS 
-        node.status = isOnline ? 'online' : 'offline';
+        let uptime24h = 0;
+        try {
+          uptime24h = await uptimeService.getNodeUptime(node.nodeId, '24h');
+        } catch (err) {
+          logger.warn(`Could not get uptime for ${node.nodeId}: ${err.message}`);
+        }
+
+        // ✅ Set status based on online state AND uptime
+        if (isOnline) {
+          if (uptime24h < 90 && uptime24h > 0) {
+            node.status = 'degraded'; // Online but poor uptime
+          } else {
+            node.status = 'online'; // Online and healthy
+          }
+        } else {
+          node.status = 'offline';
+        }
+
+
         node.lastSeen = new Date(lastSeenTimestamp);
 
         node.gossipAddress = pod.address || '';

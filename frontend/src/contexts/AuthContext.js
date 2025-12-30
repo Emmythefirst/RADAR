@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }) => {
       const savedToken = localStorage.getItem('token');
       
       if (!savedToken) {
+        console.log('❌ No token found');
         setLoading(false);
         setIsAuthenticated(false);
         setUser(null);
@@ -39,7 +40,15 @@ export const AuthProvider = ({ children }) => {
 
         if (response.data?.success && response.data.user) {
           console.log('✅ User loaded:', response.data.user.email);
-          setUser(response.data.user);
+          
+          const userData = {
+            ...response.data.user,
+            watchlist: Array.isArray(response.data.user.watchlist) 
+              ? response.data.user.watchlist 
+              : []
+          };
+          
+          setUser(userData);
           setToken(savedToken);
           setIsAuthenticated(true);
         } else {
@@ -62,17 +71,22 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await api.post('/auth/login', { email, password });
+      const response = await api.post('/auth/signin', { email, password });
       
       if (response.data?.success) {
         const { token: newToken, user: userData } = response.data;
         
+        const safeUserData = {
+          ...userData,
+          watchlist: Array.isArray(userData.watchlist) ? userData.watchlist : []
+        };
+        
         localStorage.setItem('token', newToken);
         setToken(newToken);
-        setUser(userData);
+        setUser(safeUserData);
         setIsAuthenticated(true);
         
-        console.log('✅ Login successful:', userData.email);
+        console.log('✅ Login successful:', safeUserData.email);
         return { success: true };
       }
       
@@ -93,12 +107,17 @@ export const AuthProvider = ({ children }) => {
       if (response.data?.success) {
         const { token: newToken, user: userData } = response.data;
         
+        const safeUserData = {
+          ...userData,
+          watchlist: Array.isArray(userData.watchlist) ? userData.watchlist : []
+        };
+        
         localStorage.setItem('token', newToken);
         setToken(newToken);
-        setUser(userData);
+        setUser(safeUserData);
         setIsAuthenticated(true);
         
-        console.log('✅ Signup successful:', userData.email);
+        console.log('✅ Signup successful:', safeUserData.email);
         return { success: true };
       }
       
@@ -108,6 +127,39 @@ export const AuthProvider = ({ children }) => {
       return { 
         success: false, 
         error: error.response?.data?.error || error.message || 'Signup failed' 
+      };
+    }
+  };
+
+  const loginWithGoogle = async (credential) => {
+    try {
+      console.log('🔐 Google login with credential...');
+      
+      const response = await api.post('/auth/google', { token: credential });
+      
+      if (response.data?.success) {
+        const { token: newToken, user: userData } = response.data;
+        
+        const safeUserData = {
+          ...userData,
+          watchlist: Array.isArray(userData.watchlist) ? userData.watchlist : []
+        };
+        
+        localStorage.setItem('token', newToken);
+        setToken(newToken);
+        setUser(safeUserData);
+        setIsAuthenticated(true);
+        
+        console.log('✅ Google login successful:', safeUserData.email);
+        return { success: true };
+      }
+      
+      throw new Error(response.data?.error || 'Google login failed');
+    } catch (error) {
+      console.error('❌ Google login error:', error);
+      return { 
+        success: false, 
+        error: error.response?.data?.error || error.message || 'Google login failed' 
       };
     }
   };
@@ -126,41 +178,14 @@ export const AuthProvider = ({ children }) => {
       return;
     }
     
+    const safeWatchlist = Array.isArray(newWatchlist) ? newWatchlist : [];
+    
     setUser(prev => ({
       ...prev,
-      watchlist: newWatchlist
+      watchlist: safeWatchlist
     }));
-    console.log('✅ Watchlist updated:', newWatchlist.length, 'items');
+    console.log('✅ Watchlist updated:', safeWatchlist.length, 'items');
   };
-
-const loginWithGoogle = async (credential) => {
-    try {
-      console.log('🔐 Google login with credential...');
-      
-      const response = await api.post('/auth/google', { token: credential });
-      
-      if (response.data?.success) {
-        const { token: newToken, user: userData } = response.data;
-        
-        localStorage.setItem('token', newToken);
-        setToken(newToken);
-        setUser(userData);
-        setIsAuthenticated(true);
-        
-        console.log('✅ Google login successful:', userData.email);
-        return { success: true };
-      }
-      
-      throw new Error(response.data?.error || 'Google login failed');
-    } catch (error) {
-      console.error('❌ Google login error:', error);
-      return { 
-        success: false, 
-        error: error.response?.data?.error || error.message || 'Google login failed' 
-      };
-    }
-  };
-
 
   const value = {
     user,

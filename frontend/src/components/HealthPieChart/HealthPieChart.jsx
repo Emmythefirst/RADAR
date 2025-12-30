@@ -58,7 +58,7 @@ const HealthPieChart = ({ healthDistribution = {}, height = 220 }) => {
         </PieChart>
       </ResponsiveContainer>
 
-      {/* ✅ LEGEND WITH EXPLICIT THRESHOLDS */}
+      {/* ✅ HEALTH LEGEND THRESHOLDS */}
       <div className="health-legend">
         {data.map(item => (
           <div key={item.key} className="legend-item">

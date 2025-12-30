@@ -10,7 +10,6 @@ const WatchlistButton = ({ nodeId }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  // Wait for auth to load
   if (authLoading) {
     return (
       <button className="watchlist-btn loading" disabled>
@@ -40,7 +39,7 @@ const WatchlistButton = ({ nodeId }) => {
     );
   }
 
-  // SAFE check for watchlist - ensure it exists and is an array
+  // check if watchlist exists and is an array
   const watchlist = Array.isArray(user?.watchlist) ? user.watchlist : [];
   const isInWatchlist = watchlist.includes(nodeId);
 
@@ -93,7 +92,7 @@ const WatchlistButton = ({ nodeId }) => {
     } catch (error) {
       console.error('❌ Watchlist error:', error);
       
-      // Better error handling
+      // error handling
       if (error.response?.status === 401) {
         alert('Session expired. Please login again.');
         navigate('/login', { state: { from: window.location.pathname } });

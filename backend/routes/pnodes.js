@@ -7,7 +7,7 @@ const { fetchGossipNodes } = require('../services/gossipService');
 const { calculateReputationScore } = require('../utils/reputationScore');
 const { getNodeSLAPercentile } = require('../utils/slaPercentile');
 
-const auth = require('../middleware/authmiddleware');
+const authMiddleware = require('../middleware/authMiddleware');
 
 /**
  * Health band helper
@@ -22,7 +22,7 @@ function getHealthBand(score) {
 /**
  * GET /api/pnodes
  */
-router.get('/', auth, async (req, res, next) => {
+router.get('/', authMiddleware, async (req, res, next) => {
   try {
     const { status, limit = 100, skip = 0, sort = '-reputationScore' } = req.query;
 
@@ -74,7 +74,7 @@ router.get('/', auth, async (req, res, next) => {
 /**
  * GET /api/pnodes/map/data
  */
-router.get('/map/data', auth, async (req, res, next) => {
+router.get('/map/data', authMiddleware, async (req, res, next) => {
   try {
     const nodes = await PNode.find({
       'location.latitude': { $exists: true },
@@ -106,7 +106,7 @@ router.get('/map/data', auth, async (req, res, next) => {
 /**
  * GET /api/pnodes/leaderboard/top
  */
-router.get('/leaderboard/top', auth, async (req, res, next) => {
+router.get('/leaderboard/top', authMiddleware, async (req, res, next) => {
   try {
     const limit = Number(req.query.limit || 50);
     const window = req.query.window || '7d';
@@ -154,7 +154,7 @@ router.get('/leaderboard/top', auth, async (req, res, next) => {
 /**
  * GET /api/pnodes/stats/network
  */
-router.get('/stats/network', auth, async (req, res, next) => {
+router.get('/stats/network', authMiddleware, async (req, res, next) => {
   try {
     const nodes = await PNode.find();
 
@@ -223,7 +223,7 @@ router.get('/stats/network', auth, async (req, res, next) => {
 /**
  * POST /api/pnodes/refresh
  */
-router.post('/refresh', auth, async (req, res, next) => {
+router.post('/refresh', authMiddleware, async (req, res, next) => {
   try {
     const nodes = await fetchGossipNodes();
 
@@ -241,7 +241,7 @@ router.post('/refresh', auth, async (req, res, next) => {
 /**
  * GET /api/pnodes/:nodeId 
  */
-router.get('/:nodeId', auth, async (req, res, next) => {
+router.get('/:nodeId', authMiddleware, async (req, res, next) => {
   try {
     const { nodeId } = req.params;
     

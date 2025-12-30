@@ -13,14 +13,12 @@
   white-space: nowrap;
 }
 
-/* Existing colors */
 .badge-green { background: #22c55e; }
 .badge-blue { background: #3b82f6; }
 .badge-purple { background: #8b5cf6; }
 .badge-orange { background: #f59e0b; }
 .badge-gray { background: #6b7280; }
 
-/* SLA tiers */
 .sla-excellent { background: #16a34a; }
 .sla-good { background: #65a30d; }
 .sla-degraded { background: #d97706; }

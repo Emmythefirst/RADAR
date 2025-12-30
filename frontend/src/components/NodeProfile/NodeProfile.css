@@ -306,7 +306,6 @@
   margin: 0 0 1rem 0;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .node-profile-container {
     padding: 1rem;
@@ -335,7 +334,6 @@
   }
 }
 
-/* Loading spinner */
 .spinner {
   width: 50px;
   height: 50px;
