@@ -226,7 +226,7 @@ GOOGLE_CLIENT_ID=your-google-client-id
 GOOGLE_CLIENT_SECRET=your-google-client-secret
 
 # Known pNodes (comma-separated list of pNode endpoints)
-KNOWN_PNODES=node1.xandeum.io:8899,node2.xandeum.io:8899
+KNOWN_PNODES=node1.xandeum.io:6000,node2.xandeum.io:6000
 
 # Rate Limiting
 RATE_LIMIT_WINDOW MS=900000
