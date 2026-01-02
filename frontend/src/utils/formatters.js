@@ -10,12 +10,20 @@ export const formatBytes = (bytes, decimals = 2) => {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 };
 
+/**
+ * ✅ FIXED: Format uptime percentage with 100% cap
+ */
 export const formatUptime = (uptime) => {
   const value = Number(uptime);
-  if (!Number.isFinite(value)) return '0.00%';
-  return `${value.toFixed(2)}%`;
+  
+  // Handle invalid values
+  if (!Number.isFinite(value) || value < 0) return '0.00%';
+  
+  // ✅ FIX: Cap at 100% maximum
+  const cappedValue = Math.min(100, value);
+  
+  return `${cappedValue.toFixed(2)}%`;
 };
-
 
 export const formatLatency = (ms) => {
   if (ms < 1000) return `${ms.toFixed(0)}ms`;

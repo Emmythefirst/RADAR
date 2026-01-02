@@ -12,7 +12,6 @@ const WatchlistPage = () => {
   const [watchlistNodes, setWatchlistNodes] = useState([]);
   const [loading, setLoading] = useState(true);
 
-
   const fetchWatchlist = useCallback(async () => {
     try {
       setLoading(true);
@@ -53,6 +52,13 @@ const WatchlistPage = () => {
     } catch (error) {
       console.error('Error removing from watchlist:', error);
     }
+  };
+
+  // ✅ FIX: Navigate to node profile with correct nodeId
+  const handleViewDetails = (nodeId) => {
+    navigate(`/nodes/${encodeURIComponent(nodeId)}`, {
+      state: { from: '/watchlist' }
+    });
   };
 
   if (loading) {
@@ -120,7 +126,7 @@ const WatchlistPage = () => {
 
                 <div className="stat-row">
                   <span className="stat-label">Reputation</span>
-                  <span className="stat-value">{node.reputationScore.toFixed(1)}</span>
+                  <span className="stat-value">{node.reputationScore?.toFixed(1) || 'N/A'}</span>
                 </div>
 
                 <div className="stat-row">
@@ -144,8 +150,9 @@ const WatchlistPage = () => {
               </div>
 
               <div className="watchlist-card-footer">
+                {/* ✅ FIX: Call handleViewDetails with nodeId */}
                 <button 
-                  onClick={() => navigate(`/nodes`)}
+                  onClick={() => handleViewDetails(node.nodeId)}
                   className="view-details-btn"
                 >
                   View Details

@@ -5,7 +5,7 @@ const Metric = require('../models/Metric');
 const logger = require('../utils/logger');
 const { calculateReputationScore, assignBadges } = require('../utils/reputationScore');
 const { getLocationFromIP } = require('../utils/geoLocation');
-const { getNodeSLAPercentile } = require('../utils/slaPercentile');
+const { getNodeSLAPercentile, clearPercentileCache } = require('../utils/slaPercentile');
 const uptimeService = require('./uptimeService');
 
 // Generate readable node names
@@ -82,7 +82,7 @@ async function fetchGossipNodes() {
           if (uptime24h < 90 && uptime24h > 0) {
             node.status = 'degraded'; // Online but poor uptime
           } else {
-            node.status = 'online'; // Online and healthy
+            node.status = 'online';
           }
         } else {
           node.status = 'offline';
@@ -135,6 +135,8 @@ async function fetchGossipNodes() {
     }
 
     logger.info(`Successfully processed ${processedNodes.length} pNodes`);
+    
+    clearPercentileCache();
     return processedNodes;
 
   } catch (error) {

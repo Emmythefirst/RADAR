@@ -68,7 +68,6 @@
   animation: spin 1s linear infinite;
 }
 
-
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -245,6 +244,78 @@
   box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
 }
 
+/* ========================================
+   ✅ LIGHT MODE STYLES
+   ======================================== */
+
+[data-theme="light"] .watchlist-title {
+  color: #0f172a;
+  font-weight: 800;
+}
+
+[data-theme="light"] .watchlist-subtitle {
+  color: #475569;
+  font-weight: 500;
+}
+
+[data-theme="light"] .watchlist-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(30, 41, 59, 0.15);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .watchlist-card:hover {
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 10px 20px rgba(59, 130, 246, 0.15);
+}
+
+[data-theme="light"] .watchlist-card-header {
+  border-bottom: 1px solid rgba(30, 41, 59, 0.1);
+}
+
+[data-theme="light"] .node-info h3 {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+[data-theme="light"] .node-id {
+  background: rgba(59, 130, 246, 0.08);
+  color: #475569;
+  border: 1px solid rgba(59, 130, 246, 0.15);
+}
+
+[data-theme="light"] .stat-label {
+  color: #64748b;
+  font-weight: 600;
+}
+
+[data-theme="light"] .stat-value {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+[data-theme="light"] .watchlist-card-footer {
+  border-top: 1px solid rgba(30, 41, 59, 0.1);
+}
+
+[data-theme="light"] .empty-icon {
+  color: #94a3b8;
+}
+
+[data-theme="light"] .watchlist-empty h3 {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+[data-theme="light"] .watchlist-empty p {
+  color: #64748b;
+}
+
+[data-theme="light"] .watchlist-loading p {
+  color: #475569;
+  font-weight: 500;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .watchlist-grid {
@@ -258,9 +329,4 @@
   .watchlist-card {
     padding: 1rem;
   }
-}
-
-[data-theme="light"] .watchlist-title {
-  color: #000000;
-  font-weight: 800;
 }

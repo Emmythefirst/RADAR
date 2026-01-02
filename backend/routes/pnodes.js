@@ -248,7 +248,7 @@ router.get('/:nodeId', authMiddleware, async (req, res, next) => {
     console.log(`🔍 Fetching node: ${nodeId}`);
     
     // Find node (fast, indexed query)
-    const node = await PNode.findOne({ nodeId }).lean(); // .lean() for better performance
+    const node = await PNode.findOne({ nodeId }).lean();
 
     if (!node) {
       console.log(`❌ Node not found: ${nodeId}`);
@@ -260,52 +260,41 @@ router.get('/:nodeId', authMiddleware, async (req, res, next) => {
 
     console.log(`✅ Node found: ${nodeId}`);
 
-    // Fetch uptime data with timeout protection
-    const uptimePromises = [
-      uptimeService.getNodeUptime(node.nodeId, '24h').catch(err => {
-        console.error(`Uptime 24h error: ${err.message}`);
-        return 0;
-      }),
-      uptimeService.getNodeUptime(node.nodeId, '7d').catch(err => {
-        console.error(`Uptime 7d error: ${err.message}`);
-        return 0;
-      })
-    ];
+    // ✅ Use stored uptime values as fallback
+    let uptime24h = node.performance?.uptime || 0;
+    let uptime7d = node.performance?.uptime || 0;
+    let uptime30d = node.performance?.uptime || 0;
 
-    
-    const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('Uptime calculation timeout')), 5000)
-    );
-
-    let uptime24h = 0;
-    let uptime7d = 0;
-
+    // Try to get fresh uptime data (with shorter timeout)
     try {
-      [uptime24h, uptime7d] = await Promise.race([
-        Promise.all(uptimePromises),
+      const uptimePromises = Promise.all([
+        uptimeService.getNodeUptime(node.nodeId, '24h'),
+        uptimeService.getNodeUptime(node.nodeId, '7d'),
+        uptimeService.getNodeUptime(node.nodeId, '30d')
+      ]);
+
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Timeout')), 2000) // Reduced to 2s
+      );
+
+      [uptime24h, uptime7d, uptime30d] = await Promise.race([
+        uptimePromises,
         timeoutPromise
       ]);
     } catch (err) {
-      console.error(`⚠️ Uptime calculation timeout, using defaults`);
-      
-      uptime24h = node.performance?.uptime || 0;
-      uptime7d = node.performance?.uptime || 0;
+      console.log(`⚠️ Using stored uptime values for ${nodeId.substring(0, 8)}...`);
     }
 
-    let percentile = 0;
-    let top1Percent = false;
+    // ✅ Get SLA percentile (now much faster with caching)
+    let percentile = node.performance?.slaPercentile || 0;
+    let top1Percent = node.performance?.top1Percent || false;
 
     try {
-      const slaData = await Promise.race([
-        getNodeSLAPercentile(node.nodeId),
-        new Promise((_, reject) => setTimeout(() => reject(new Error('SLA timeout')), 3000))
-      ]);
+      const slaData = await getNodeSLAPercentile(node.nodeId);
       percentile = slaData.percentile;
       top1Percent = slaData.top1Percent;
     } catch (err) {
-      console.error(`⚠️ SLA calculation timeout, using stored values`);
-      percentile = node.performance?.slaPercentile || 0;
-      top1Percent = node.performance?.top1Percent || false;
+      console.log(`⚠️ Using stored SLA percentile for ${nodeId.substring(0, 8)}...`);
     }
 
     const response = {
@@ -314,13 +303,11 @@ router.get('/:nodeId', authMiddleware, async (req, res, next) => {
       sla: {
         uptime24h,
         uptime7d,
-        uptime30d: node.performance?.uptime || 0, 
+        uptime30d,
         percentile,
         top1Percent
       }
     };
-
-    console.log(`✅ Response prepared for: ${nodeId}`);
 
     res.json({
       success: true,

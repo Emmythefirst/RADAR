@@ -56,6 +56,7 @@ app.use('/api/pnodes', require('./routes/pnodes'));
 app.use('/api/metrics', require('./routes/metrics'));
 app.use('/api/alerts', require('./routes/alerts'));
 app.use('/api/watchlist', require('./routes/watchlist'));
+app.use('/api/admin', require('./routes/admin'));
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -78,7 +79,8 @@ app.get('/', (req, res) => {
       metrics: '/api/metrics',
       alerts: '/api/alerts',
       auth: '/api/auth',
-      watchlist: '/api/watchlist'
+      watchlist: '/api/watchlist',
+      admin: '/api/admin'
     }
   });
 });

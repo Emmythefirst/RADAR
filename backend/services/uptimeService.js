@@ -1,3 +1,4 @@
+
 const Metric = require('../models/Metric');
 const PNode = require('../models/PNode');
 
@@ -24,6 +25,10 @@ function getTimeWindowMs(window) {
   return windows[window] || windows['24h'];
 }
 
+/**
+ * Calculate node uptime based on metric samples
+ * ✅ FIXED: Ensures uptime never exceeds 100%
+ */
 async function calculateNodeUptime(nodeId, window = '24h') {
   const since = new Date(Date.now() - getTimeWindowMs(window));
 
@@ -32,10 +37,20 @@ async function calculateNodeUptime(nodeId, window = '24h') {
     timestamp: { $gte: since }
   }).select('status');
 
-  if (!samples.length) return 0;
+  // ✅ FIX: If no samples, return 0 instead of calculating
+  if (!samples.length) {
+    return 0;
+  }
 
   const onlineSamples = samples.filter(s => s.status === 'online').length;
-  return Number(((onlineSamples / samples.length) * 100).toFixed(3));
+  
+  // ✅ FIX: Cap at 100% maximum
+  const uptimePercentage = Math.min(
+    100, 
+    Number(((onlineSamples / samples.length) * 100).toFixed(3))
+  );
+  
+  return uptimePercentage;
 }
 
 /**
@@ -47,10 +62,7 @@ async function getNodeUptime(nodeId, window = '24h') {
 
 /**
  * Real-time uptime calculation for gossipService
- * @param {Object} node 
- * @param {boolean} isOnline 
- * @param {number} now 
- * @returns {Object} 
+ * ✅ FIXED: Ensures calculated uptime is capped at 100%
  */
 function calculateUptime(node, isOnline, now) {
   const lastSeenAt = node.performance?.lastSeenAt
@@ -65,9 +77,14 @@ function calculateUptime(node, isOnline, now) {
   const updatedOnline = isOnline ? onlineDurationMs + delta : onlineDurationMs;
   const updatedOffline = isOnline ? offlineDurationMs : offlineDurationMs + delta;
 
-  const uptime = updatedOnline + updatedOffline > 0
-    ? Number(((updatedOnline / (updatedOnline + updatedOffline)) * 100).toFixed(2))
-    : 0;
+  const totalDuration = updatedOnline + updatedOffline;
+
+  // ✅ FIX: Handle edge cases and cap at 100%
+  let uptime = 0;
+  
+  if (totalDuration > 0) {
+    uptime = Math.min(100, Number(((updatedOnline / totalDuration) * 100).toFixed(2)));
+  }
 
   return {
     onlineDurationMs: updatedOnline,
@@ -108,6 +125,7 @@ async function getNodeSLA(nodeId) {
 
 /**
  * Network-wide uptime
+ * ✅ FIXED: Ensures network uptime is capped at 100%
  */
 async function getNetworkUptime(window = '24h') {
   const since = new Date(Date.now() - getTimeWindowMs(window));
@@ -122,8 +140,14 @@ async function getNetworkUptime(window = '24h') {
 
   const onlineSamples = samples.filter(s => s.status === 'online').length;
 
+  // ✅ FIX: Cap at 100%
+  const uptimePercentage = Math.min(
+    100,
+    Number(((onlineSamples / samples.length) * 100).toFixed(3))
+  );
+
   return {
-    uptimePercentage: Number(((onlineSamples / samples.length) * 100).toFixed(3)),
+    uptimePercentage,
     totalSamples: samples.length
   };
 }
