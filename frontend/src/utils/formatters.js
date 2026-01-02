@@ -11,7 +11,7 @@ export const formatBytes = (bytes, decimals = 2) => {
 };
 
 /**
- * ✅ FIXED: Format uptime percentage with 100% cap
+ Format uptime percentage with 100% cap
  */
 export const formatUptime = (uptime) => {
   const value = Number(uptime);
@@ -19,7 +19,7 @@ export const formatUptime = (uptime) => {
   // Handle invalid values
   if (!Number.isFinite(value) || value < 0) return '0.00%';
   
-  // ✅ FIX: Cap at 100% maximum
+  // Cap at 100% maximum
   const cappedValue = Math.min(100, value);
   
   return `${cappedValue.toFixed(2)}%`;

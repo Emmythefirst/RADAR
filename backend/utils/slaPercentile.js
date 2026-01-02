@@ -1,16 +1,15 @@
 const PNode = require('../models/PNode');
 const uptimeService = require('../services/uptimeService');
 
-// ✅ Cache to avoid recalculating for every node
+// Cache to avoid recalculating for every node
 let percentileCache = {
   data: new Map(),
   lastUpdated: null,
-  ttl: 5 * 60 * 1000 // 5 minutes cache
+  ttl: 5 * 60 * 1000 
 };
 
 /**
- * ✅ FAST VERSION: Calculate percentiles using stored uptime values
- * This is 100x faster than querying uptimeService for every node
+ * Super fast query: Calculate percentiles using stored uptime values
  */
 async function calculatePercentilesFromStored() {
   const now = Date.now();
@@ -74,7 +73,7 @@ async function calculatePercentilesFromStored() {
 }
 
 /**
- * ✅ ACCURATE BUT SLOW: Your original method using real-time uptime
+ * ACCURATE BUT SLOW:
  * Only use this for manual updates, not for real-time requests
  */
 async function calculatePercentilesFromUptimeService(window = '7d') {
@@ -139,10 +138,7 @@ async function calculatePercentilesFromUptimeService(window = '7d') {
   }
 }
 
-/**
- * ✅ PUBLIC API: Fast percentile lookup (uses cache)
- * This is what you call in routes for real-time requests
- */
+
 async function getNodeSLAPercentile(nodeId) {
   try {
     // Use fast cached version
@@ -172,7 +168,7 @@ async function getNodeSLAPercentile(nodeId) {
 }
 
 /**
- * Force cache refresh
+ Force cache refresh
  */
 function clearPercentileCache() {
   percentileCache.data.clear();
@@ -180,10 +176,7 @@ function clearPercentileCache() {
   console.log('🗑️ SLA percentile cache cleared');
 }
 
-/**
- * ✅ One-time function to update all nodes with accurate percentiles
- * This uses uptimeService for accuracy, then stores the results
- */
+
 async function updateAllNodesWithPercentiles(window = '7d') {
   try {
     console.log('🔄 Starting ACCURATE SLA percentile update for all nodes...');
@@ -243,9 +236,9 @@ async function updateAllNodesWithPercentiles(window = '7d') {
 }
 
 module.exports = { 
-  getNodeSLAPercentile,              // Fast - use in routes
-  updateAllNodesWithPercentiles,     // Slow but accurate - use for manual updates
-  clearPercentileCache,              // Clear cache
-  calculatePercentilesFromStored,    // Fast calculation
-  calculatePercentilesFromUptimeService  // Slow but accurate calculation
+  getNodeSLAPercentile,             
+  updateAllNodesWithPercentiles,     
+  clearPercentileCache,             
+  calculatePercentilesFromStored,   
+  calculatePercentilesFromUptimeService 
 };

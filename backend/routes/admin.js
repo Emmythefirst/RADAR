@@ -3,10 +3,8 @@ const router = express.Router();
 const { updateAllNodesWithPercentiles } = require('../utils/slaPercentile');
 const authMiddleware = require('../middleware/authMiddleware');
 
-/**
- * POST /api/admin/update-percentiles
- * Manually trigger SLA percentile update for all nodes
- */
+//Manually trigger SLA percentile update for all nodes
+
 router.post('/update-percentiles', authMiddleware, async (req, res, next) => {
   try {
     console.log('🔧 Admin: Triggering SLA percentile update...');

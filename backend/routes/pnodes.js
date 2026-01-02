@@ -9,9 +9,7 @@ const { getNodeSLAPercentile } = require('../utils/slaPercentile');
 
 const authMiddleware = require('../middleware/authMiddleware');
 
-/**
- * Health band helper
- */
+//Health band helper
 function getHealthBand(score) {
   if (score >= 85) return 'excellent';
   if (score >= 70) return 'good';
@@ -19,9 +17,8 @@ function getHealthBand(score) {
   return 'unhealthy';
 }
 
-/**
- * GET /api/pnodes
- */
+//GET /api/pnodes
+
 router.get('/', authMiddleware, async (req, res, next) => {
   try {
     const { status, limit = 100, skip = 0, sort = '-reputationScore' } = req.query;
@@ -71,9 +68,8 @@ router.get('/', authMiddleware, async (req, res, next) => {
 });
 
 
-/**
- * GET /api/pnodes/map/data
- */
+//GET /api/pnodes/map/data
+
 router.get('/map/data', authMiddleware, async (req, res, next) => {
   try {
     const nodes = await PNode.find({
@@ -103,9 +99,8 @@ router.get('/map/data', authMiddleware, async (req, res, next) => {
   }
 });
 
-/**
- * GET /api/pnodes/leaderboard/top
- */
+//GET /api/pnodes/leaderboard/top
+
 router.get('/leaderboard/top', authMiddleware, async (req, res, next) => {
   try {
     const limit = Number(req.query.limit || 50);
@@ -151,9 +146,8 @@ router.get('/leaderboard/top', authMiddleware, async (req, res, next) => {
 });
 
 
-/**
- * GET /api/pnodes/stats/network
- */
+//GET /api/pnodes/stats/network
+ 
 router.get('/stats/network', authMiddleware, async (req, res, next) => {
   try {
     const nodes = await PNode.find();
@@ -220,9 +214,8 @@ router.get('/stats/network', authMiddleware, async (req, res, next) => {
 });
 
 
-/**
- * POST /api/pnodes/refresh
- */
+//POST /api/pnodes/refresh
+ 
 router.post('/refresh', authMiddleware, async (req, res, next) => {
   try {
     const nodes = await fetchGossipNodes();
@@ -238,9 +231,8 @@ router.post('/refresh', authMiddleware, async (req, res, next) => {
 });
 
 
-/**
- * GET /api/pnodes/:nodeId 
- */
+//GET /api/pnodes/:nodeId 
+
 router.get('/:nodeId', authMiddleware, async (req, res, next) => {
   try {
     const { nodeId } = req.params;
@@ -265,7 +257,7 @@ router.get('/:nodeId', authMiddleware, async (req, res, next) => {
     let uptime7d = node.performance?.uptime || 0;
     let uptime30d = node.performance?.uptime || 0;
 
-    // Try to get fresh uptime data (with shorter timeout)
+    // Try to get fresh uptime data
     try {
       const uptimePromises = Promise.all([
         uptimeService.getNodeUptime(node.nodeId, '24h'),
@@ -285,7 +277,7 @@ router.get('/:nodeId', authMiddleware, async (req, res, next) => {
       console.log(`⚠️ Using stored uptime values for ${nodeId.substring(0, 8)}...`);
     }
 
-    // ✅ Get SLA percentile (now much faster with caching)
+    // ✅ Get SLA percentile
     let percentile = node.performance?.slaPercentile || 0;
     let top1Percent = node.performance?.top1Percent || false;
 

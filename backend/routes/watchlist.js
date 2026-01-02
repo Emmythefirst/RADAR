@@ -4,7 +4,7 @@ const User = require('../models/User');
 const PNode = require('../models/PNode');
 const authMiddleware = require('../middleware/authMiddleware');
 
-// ✅ Add node to watchlist
+//Add node to watchlist
 router.post('/', authMiddleware, async (req, res, next) => {
   try {
     console.log('📝 POST /watchlist - Adding node to watchlist');
@@ -41,7 +41,6 @@ router.post('/', authMiddleware, async (req, res, next) => {
       });
     }
 
-    // Ensure watchlist is an array
     if (!Array.isArray(user.watchlist)) {
       user.watchlist = [];
     }
@@ -73,7 +72,7 @@ router.post('/', authMiddleware, async (req, res, next) => {
   }
 });
 
-// ✅ Remove node from watchlist
+//Remove node from watchlist
 router.delete('/', authMiddleware, async (req, res, next) => {
   try {
     console.log('🗑️ DELETE /watchlist - Removing node from watchlist');
@@ -99,7 +98,6 @@ router.delete('/', authMiddleware, async (req, res, next) => {
       });
     }
 
-    // Ensure watchlist is an array
     if (!Array.isArray(user.watchlist)) {
       user.watchlist = [];
     }
@@ -129,7 +127,7 @@ router.delete('/', authMiddleware, async (req, res, next) => {
   }
 });
 
-// ✅ Get user's watchlist with node details
+//Get user's watchlist with node details
 router.get('/', authMiddleware, async (req, res, next) => {
   try {
     console.log('📋 GET /watchlist - Fetching watchlist');

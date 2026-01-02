@@ -8,10 +8,8 @@ const errorHandler = require('./middleware/errorHandler');
 const logger = require('./utils/logger');
 const { startMetricsCollector } = require('./jobs/scheduledTasks');
 
-// Load environment variables
 dotenv.config();
 
-// Initialize Express app
 const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
@@ -21,7 +19,6 @@ const io = new Server(httpServer, {
   }
 });
 
-// Connect to MongoDB
 connectDB();
 
 // Middleware

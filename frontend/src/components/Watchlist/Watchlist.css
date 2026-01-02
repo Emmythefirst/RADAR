@@ -244,10 +244,6 @@
   box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
 }
 
-/* ========================================
-   ✅ LIGHT MODE STYLES
-   ======================================== */
-
 [data-theme="light"] .watchlist-title {
   color: #0f172a;
   font-weight: 800;

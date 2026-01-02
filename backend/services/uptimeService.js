@@ -2,18 +2,17 @@
 const Metric = require('../models/Metric');
 const PNode = require('../models/PNode');
 
-/**
- * SLA thresholds (industry-standard)
- */
+
+ //SLA thresholds
+
 const SLA_TIERS = {
   GOLD: 99.9,
   SILVER: 99.5,
   BRONZE: 99.0
 };
 
-/**
- * Convert timeframe string to milliseconds
- */
+ //Convert timeframe string to milliseconds
+ 
 function getTimeWindowMs(window) {
   const windows = {
     '1h': 60 * 60 * 1000,
@@ -25,10 +24,8 @@ function getTimeWindowMs(window) {
   return windows[window] || windows['24h'];
 }
 
-/**
- * Calculate node uptime based on metric samples
- * ✅ FIXED: Ensures uptime never exceeds 100%
- */
+
+ //Calculate node uptime based on metric samples
 async function calculateNodeUptime(nodeId, window = '24h') {
   const since = new Date(Date.now() - getTimeWindowMs(window));
 
@@ -37,14 +34,13 @@ async function calculateNodeUptime(nodeId, window = '24h') {
     timestamp: { $gte: since }
   }).select('status');
 
-  // ✅ FIX: If no samples, return 0 instead of calculating
   if (!samples.length) {
     return 0;
   }
 
   const onlineSamples = samples.filter(s => s.status === 'online').length;
   
-  // ✅ FIX: Cap at 100% maximum
+  //Cap at 100% maximum
   const uptimePercentage = Math.min(
     100, 
     Number(((onlineSamples / samples.length) * 100).toFixed(3))
@@ -53,17 +49,14 @@ async function calculateNodeUptime(nodeId, window = '24h') {
   return uptimePercentage;
 }
 
-/**
- * PUBLIC API 
- */
+//PUBLIC API 
+
 async function getNodeUptime(nodeId, window = '24h') {
   return calculateNodeUptime(nodeId, window);
 }
 
-/**
- * Real-time uptime calculation for gossipService
- * ✅ FIXED: Ensures calculated uptime is capped at 100%
- */
+//Real-time uptime calculation for gossipService
+
 function calculateUptime(node, isOnline, now) {
   const lastSeenAt = node.performance?.lastSeenAt
     ? new Date(node.performance.lastSeenAt).getTime()
@@ -79,7 +72,6 @@ function calculateUptime(node, isOnline, now) {
 
   const totalDuration = updatedOnline + updatedOffline;
 
-  // ✅ FIX: Handle edge cases and cap at 100%
   let uptime = 0;
   
   if (totalDuration > 0) {
@@ -93,9 +85,8 @@ function calculateUptime(node, isOnline, now) {
   };
 }
 
-/**
- * Determine SLA tier
- */
+//Determine SLA tier
+
 function getSLATier(uptimePercentage) {
   if (uptimePercentage >= SLA_TIERS.GOLD) return 'GOLD';
   if (uptimePercentage >= SLA_TIERS.SILVER) return 'SILVER';
@@ -103,9 +94,7 @@ function getSLATier(uptimePercentage) {
   return 'NONE';
 }
 
-/**
- * Get SLA bundle
- */
+
 async function getNodeSLA(nodeId) {
   const [uptime24h, uptime7d, uptime30d] = await Promise.all([
     getNodeUptime(nodeId, '24h'),
@@ -123,10 +112,6 @@ async function getNodeSLA(nodeId) {
   };
 }
 
-/**
- * Network-wide uptime
- * ✅ FIXED: Ensures network uptime is capped at 100%
- */
 async function getNetworkUptime(window = '24h') {
   const since = new Date(Date.now() - getTimeWindowMs(window));
 
@@ -140,7 +125,7 @@ async function getNetworkUptime(window = '24h') {
 
   const onlineSamples = samples.filter(s => s.status === 'online').length;
 
-  // ✅ FIX: Cap at 100%
+  //Cap at 100%
   const uptimePercentage = Math.min(
     100,
     Number(((onlineSamples / samples.length) * 100).toFixed(3))
@@ -152,9 +137,8 @@ async function getNetworkUptime(window = '24h') {
   };
 }
 
-/**
- * SLA distribution for charts (7d default)
- */
+//SLA distribution for charts (7d default)
+
 async function getSLADistribution(window = '7d') {
   const nodes = await PNode.find().select('nodeId');
 

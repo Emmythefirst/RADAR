@@ -318,10 +318,6 @@
   to { transform: rotate(360deg); }
 }
 
-/* ========================================
-   ✅ LIGHT MODE STYLES
-   ======================================== */
-
 [data-theme="light"] .node-profile-header h1 {
   color: #1e293b;
   font-weight: 700;
