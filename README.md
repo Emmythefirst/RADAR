@@ -1,231 +1,267 @@
-🎯 RADAR - Xandeum pNode Analytics Platform
+## 🎯 RADAR - Xandeum pNode Analytics Platform
 
 Real-time monitoring and analytics dashboard for Xandeum's decentralized storage network
 
 
-📋 Table of Contents
+## 📋 Table of Contents
 
-Overview
-Features
-Features in Detail
-Tech Stack
-Prerequisites
-Installation
-Configuration
-Running the Application
-Initial Setup
-Project Structure
-API Documentation
-Performance Optimization
-Troubleshooting
-Contributing
-Support
+. [Overview](#overview)
+. [Features](#features)
+. [Features in Detail](#features-in-detail)
+. [Tech Stack](#tech-stack)
+. [Prerequisites](#prerequisites)
+. [Installation](#installation)
+. [Configuration](#configuration)
+. [Running the Application](#running-the-application)
+. [Initial Setup](#initial-setup)
+. [Project Structure](#project-structure)
+. [API Documentation](#api-documentation)
+. [Performance Optimization](#performance-optimization)
+. [Troubleshooting](#troubleshooting)
+. [Contributing](#contributing)
+. [Support](#support)
 
 
-🌟 Overview
+
+
+## 🌟 Overview
+
 RADAR is a comprehensive analytics and monitoring platform for the Xandeum decentralized storage network. It provides real-time insights into pNode (personal node) performance, network health, storage capacity, and SLA compliance tracking.
-Key Capabilities
-
-📊 Real-time Dashboard - Live network statistics and performance metrics
-🗺️ Interactive Network Map - Geographic visualization of global pNode distribution
-🏆 Leaderboard System - Rankings based on reputation scores and uptime
-⚡ Performance Monitoring - Track node health, uptime, and SLA compliance
-🔔 Alert Management - Configurable notifications for network events
-⭐ Watchlist Feature - Save and track your favorite nodes
-🔐 Authentication - Secure user accounts with Google OAuth support
-🌗 Dark/Light Theme - Beautiful beige light mode and dark slate mode with smooth transitions
 
 
-✨ Features
-🎛️ Dashboard
+### Key Capabilities
 
-Network-wide statistics (total nodes, online nodes, storage capacity)
-Real-time health distribution visualization with pie charts
-Performance metrics charts (response time, uptime trends)
-Storage utilization breakdown
-Auto-refresh every 30 seconds via WebSocket
-
-🗺️ Storage Weather Map
-
-Interactive Leaflet-based world map
-Real-time node location markers
-Color-coded health indicators
-Node status filtering (online/offline/degraded)
-Cluster view for high-density areas
-
-🏆 Leaderboard
-
-Top 50 nodes by reputation score
-Multiple time windows (24h, 7d, 30d)
-Badge system (High Reputation, Top 1%, Trusted Node)
-SLA tier classification (Gold, Silver, Bronze)
-Live ranking updates
-
-📋 All Nodes
-
-Comprehensive node listing with advanced filtering
-Search by node ID, operator, or location
-Sort by reputation, uptime, storage, or status
-Watchlist quick-add functionality with star button
-Real-time status updates
-
-👤 Node Profile
-
-Detailed node information and statistics
-24h, 7d, and 30d uptime history
-Optimized SLA percentile ranking with caching
-Storage and network details
-Performance trend visualization
-Visual uptime badges (🟢/🟡/🔴)
-Back navigation with context awareness
-
-⭐ Watchlist
-
-Personal node tracking across sessions
-Quick access to favorite nodes
-One-click add/remove functionality
-Detailed performance cards
-Fixed navigation to node profiles
-Synced with user account
-
-🔔 Alert Manager
-
-Create custom alerts for:
-
-Node offline events
-Storage capacity warnings
-New node detection
-Performance degradation
+. 📊 *Real-time Dashboard* - Live network statistics and performance metrics
+. 🗺️ *Interactive Network Map* - Geographic visualization of global pNode distribution
+. 🏆 *Leaderboard System* - Rankings based on reputation scores and uptime
+. ⚡ *Performance Monitoring* - Track node health, uptime, and SLA compliance
+. 🔔 *Alert Management* - Configurable notifications for network events
+. ⭐ *Watchlist Feature* - Save and track your favorite nodes
+. 🔐 *Authentication* - Secure user accounts with Google OAuth support
+. 🌗 *Dark/Light Theme* - Beautiful beige light mode and dark slate mode with smooth transitions
 
 
-Multiple notification channels (email, webhook)
-Enable/disable alerts on-demand
-Alert history tracking
-
-🔐 Authentication
-
-Email/password registration and login
-Google OAuth integration
-JWT-based secure authentication (7-day expiry)
-Protected routes and API endpoints
-Session persistence
 
 
-🎨 Features in Detail
+## ✨ Features
 
-Reputation Scoring Algorithm
+### 🎛️ Dashboard
+
+. Network-wide statistics (total nodes, online nodes, storage capacity)
+. Real-time health distribution visualization with pie charts
+. Performance metrics charts (response time, uptime trends)
+. Storage utilization breakdown
+. Auto-refresh every 30 seconds via WebSocket
+
+### 🗺️ Storage Weather Map
+
+. Interactive Leaflet-based world map
+. Real-time node location markers
+. Color-coded health indicators
+. Node status filtering (online/offline/degraded)
+. Cluster view for high-density areas
+
+### 🏆 Leaderboard
+
+. Top 50 nodes by reputation score
+. Multiple time windows (24h, 7d, 30d)
+. Badge system (High Reputation, Top 1%, Trusted Node)
+. SLA tier classification (Gold, Silver, Bronze)
+. Live ranking updates
+
+### 📋 All Nodes
+
+. Comprehensive node listing with advanced filtering
+. Search by node ID, operator, or location
+. Sort by reputation, uptime, storage, or status
+. Watchlist quick-add functionality with star button
+. Real-time status updates
+
+### 👤 Node Profile
+
+. Detailed node information and statistics
+. 24h, 7d, and 30d uptime history
+. Optimized SLA percentile ranking with caching
+. Storage and network details
+. Performance trend visualization
+. Visual uptime badges (🟢/🟡/🔴)
+. Back navigation with context awareness
+
+### ⭐ Watchlist
+
+. Personal node tracking across sessions
+. Quick access to favorite nodes
+. One-click add/remove functionality
+. Detailed performance cards
+. Fixed navigation to node profiles
+. Synced with user account
+
+### 🔔 Alert Manager
+
+. Create custom alerts for:
+-Node offline events
+-Storage capacity warnings
+-New node detection
+-Performance degradation
+. Multiple notification channels (email, webhook)
+. Enable/disable alerts on-demand
+. Alert history tracking
+
+### 🔐 Authentication
+
+. Email/password registration and login
+. Google OAuth integration
+. JWT-based secure authentication (7-day expiry)
+. Protected routes and API endpoints
+. Session persistence
+
+
+
+
+## 🎨 Features in Detail
+
+### Reputation Scoring Algorithm
+
 Nodes are scored based on multiple factors:
+
 javascriptReputation Score = 
   (Uptime × 0.4) + 
   (SLA Percentile × 0.25) + 
   (Availability × 0.2) + 
   (Longevity × 0.15)
 
-Components:
 
-Uptime (40%) - 24-hour uptime percentage (capped at 100%)
-SLA Percentile (25%) - Ranking compared to other nodes
-Availability (20%) - Current online status
-Longevity (15%) - Time since node joined network
+*Components:*
+. *Uptime (40%)* - 24-hour uptime percentage (capped at 100%)
+. *SLA Percentile (25%)* - Ranking compared to other nodes
+. *Availability (20%)* - Current online status
+. *Longevity (15%)* - Time since node joined network
 
-SLA Percentile System
-Fast Hybrid Calculation:
 
-Uses cached percentiles for instant page loads (< 100ms)
-Automatic cache refresh every 5 minutes
-Manual recalculation via admin endpoint
-Based on stored uptime values for performance
+### SLA Percentile System
 
-Accuracy Mode (Manual Updates):
-bashcd backend
-node updatePercentiles.js
+*Fast Hybrid Calculation:*
+. Uses cached percentiles for instant page loads (< 100ms)
+. Automatic cache refresh every 5 minutes
+. Manual recalculation via admin endpoint
+. Based on stored uptime values for performance
 
-Calculates fresh uptime from all metrics
-Takes 2-5 minutes for 100+ nodes
-Stores accurate percentiles in database
-Recommended: Run weekly for fresh data
+*Accuracy Mode (Manual Updates):*
+. bashcd backend
+. node updatePercentiles.js
 
-Badge System
+*Calculates fresh uptime from all metrics*
+. Takes 2-5 minutes for 100+ nodes
+. Stores accurate percentiles in database
+. Recommended: Run weekly for fresh data
+
+
+### Badge System
 Nodes earn badges based on performance:
 
-🟢 High Reputation - 99.9%+ uptime
-🏆 Top 1% - In top 1% of all nodes by SLA percentile
-✅ Trusted Node - Verified operator
+. 🟢 *High Reputation* - 99.9%+ uptime
+. 🏆 *Top 1%* - In top 1% of all nodes by SLA percentile
+. ✅ *Trusted Node* - Verified operator
 
-SLA Tiers
+
+### SLA Tiers
 Nodes are classified into tiers:
 
-🥇 GOLD - 99.9%+ uptime
-🥈 SILVER - 99.5%+ uptime
-🥉 BRONZE - 99.0%+ uptime
+. 🥇 *GOLD* - 99.9%+ uptime
+. 🥈 *SILVER* - 99.5%+ uptime
+. 🥉 *BRONZE* - 99.0%+ uptime
 
-Theme Support
+
+### Theme Support
 RADAR supports both dark and light themes:
-
-Toggle in navbar with sun/moon icon
-Preference saved to localStorage
-Smooth transitions between themes
-Complete component coverage (Dashboard, Watchlist, Node Profile)
-High contrast for accessibility
+. Toggle in navbar with sun/moon icon
+. Preference saved to localStorage
+. Smooth transitions between themes
 
 
-🛠️ Tech Stack
-Frontend
-
-React 18.2 - UI framework
-React Router 6 - Client-side routing
-Recharts - Data visualization
-Leaflet - Interactive maps
-Lucide React - Icon library
-Axios - HTTP client
-Socket.io Client - Real-time updates
-
-Backend
-
-Node.js - Runtime environment
-Express.js - Web framework
-MongoDB - Database (with TTL indexes)
-Mongoose - ODM
-Socket.io - WebSocket server
-JWT - Authentication
-Winston - Logging
-Node-cron - Scheduled tasks (30s intervals)
-
-Additional Tools
-
-Google OAuth 2.0 - Social authentication
-Express Rate Limit - API rate limiting
-Bcrypt - Password hashing
 
 
-📦 Prerequisites
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+. *React 18.2* - UI framework
+. *React Router 6* - Client-side routing
+. *Recharts* - Data visualization
+. *Leaflet* - Interactive maps
+. *Lucide React* - Icon library
+. *Axios* - HTTP client
+. *Socket.io Client* - Real-time updates
+
+### Backend
+
+. *Node.js* - Runtime environment
+. *Express.js* - Web framework
+. *MongoDB* - Database (with TTL indexes)
+. *Mongoose* - ODM
+. *Socket.io* - WebSocket server
+. *JWT* - Authentication
+. *Winston* - Logging
+. *Node-cron* - Scheduled tasks (30s intervals)
+
+
+### Additional Tools
+
+. *Google OAuth 2.0* - Social authentication
+. *Express Rate Limit* - API rate limiting
+. *Bcrypt* - Password hashing
+
+
+## 📦 Prerequisites
 Before you begin, ensure you have the following installed:
 
-Node.js >= 16.0.0 (Download)
-npm >= 8.0.0 (comes with Node.js)
-MongoDB >= 5.0 (Download)
-Git (Download)
+. *Node.js* >= 16.0.0 ([Download](https://nodejs.org/))
+. *npm* >= 8.0.0 (comes with Node.js)
+. *MongoDB* >= 5.0 ([Download](https://www.mongodb.com/try/download/community))
+. *Git* ([Download](https://git-scm.com/downloads))
 
-Optional
+### Optional
 
-MongoDB Compass - GUI for MongoDB (Download)
+. *MongoDB Compass* - GUI for MongoDB ([Download](https://www.mongodb.com/products/compass))
 
 
-🚀 Installation
-1. Clone the Repository
-bashgit clone https://github.com/Emmythefirst/RADAR.git
+
+
+
+
+## 🚀 Installation
+
+### 1. Clone the Repository
+
+bash
+git clone https://github.com/Emmythefirst/RADAR.git
 cd RADAR
-2. Install Backend Dependencies
-bashcd backend
-npm install
-3. Install Frontend Dependencies
-bashcd ../frontend
+
+### 2. Install Backend Dependencies
+
+bash
+cd backend
 npm install
 
-⚙️ Configuration
-Backend Environment Variables
+### 3. Install Frontend Dependencies
+
+bash
+cd ../frontend
+npm install
+
+
+
+
+
+## ⚙️ Configuration
+
+### Backend Environment Variables
+
 Create a .env file in the backend directory:
-env# Server Configuration
+
+env
+# Server Configuration
 PORT=5000
 NODE_ENV=development
 
@@ -248,58 +284,72 @@ RATE_LIMIT_MAX_REQUESTS=100
 
 # Logging
 LOG_LEVEL=info
-Frontend Environment Variables
+
+
+
+
+### Frontend Environment Variables
+
 Create a .env file in the frontend directory:
-envREACT_APP_API_URL=http://localhost:5000/api
+
+env
+REACT_APP_API_URL=http://localhost:5000/api
 REACT_APP_WS_URL=ws://localhost:5000
 REACT_APP_GOOGLE_CLIENT_ID=your-google-client-id
-Setting Up Google OAuth (Optional)
-
-Go to Google Cloud Console
-Create a new project or select existing one
-Enable Google+ API
-Create OAuth 2.0 credentials
-Add authorized redirect URIs:
-
-http://localhost:3000
-Your production URL
 
 
-Copy Client ID and Client Secret to .env files
+### Setting Up Google OAuth (Optional)
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select existing one
+3. Enable Google+ API
+4. Create OAuth 2.0 credentials
+5. Add authorized redirect URIs:
+-http://localhost:3000
+-Your production URL
+6. Copy Client ID and Client Secret to .env files
 
 
-🏃 Running the Application
-Development Mode
-Start MongoDB (if running locally):
-bashmongod
-Terminal 1 - Backend:
-bashcd backend
+
+
+## 🏃 Running the Application
+
+### Development Mode
+
+*Start MongoDB* (if running locally):
+bash
+mongod
+
+
+*Terminal 1 - Backend:*
+bash 
+cd backend
 npm start
-Terminal 2 - Frontend:
-bashcd frontend
+
+
+*Terminal 2 - Frontend:*
+bash
+cd frontend
 npm start
+
+
 The application will open at http://localhost:3000
 
-🔧 Initial Setup
-Step 1: Verify Backend Connection
+
+
+## 🔧 Initial Setup
+
+. *Step 1:* Verify Backend Connection
 Once the backend starts, you should see:
 ✅ MongoDB Connected
 ✅ Server running on port 5000
 🔌 WebSocket enabled
-Step 2: Initialize SLA Percentiles
-For accurate node rankings, run the percentile calculation script:
-bashcd backend
-node updatePercentiles.js
-Expected output:
-✅ Connected to MongoDB
 ⏳ Starting accurate percentile calculation...
 📊 Processed 10/100 nodes...
 📊 Processed 20/100 nodes...
 ...
-🎉 Successfully updated 100 nodes with accurate SLA percentiles!
-🏆 Top 1% nodes: 1
-Note: This takes 2-5 minutes for 100 nodes but only needs to be run once initially, then weekly for updates.
-Step 3: Create Your First Account
+
+. *Step 2:* Create Your First Account
 
 Navigate to http://localhost:3000
 Click "Sign Up" in the navbar
@@ -307,7 +357,7 @@ Create an account or use Google OAuth
 Start exploring!
 
 
-📁 Project Structure
+## 📁 Project Structure
 RADAR/
 ├── backend/
 │   ├── config/
@@ -388,19 +438,28 @@ RADAR/
 │
 ├── .gitignore
 ├── README.md
-└── LICENSE
 
-📡 API Documentation
-Authentication Endpoints
-POST /api/auth/signup
+
+
+
+
+
+## 📡 API Documentation
+
+### Authentication Endpoints
+
+#### POST /api/auth/signup
 Create a new user account.
-Request:
+
+*Request:*
 json{
   "name": "John Doe",
   "email": "john@example.com",
   "password": "securepassword123"
 }
-Response:
+
+
+*Response:*
 json{
   "success": true,
   "token": "jwt-token-here",
@@ -411,24 +470,31 @@ json{
     "watchlist": []
   }
 }
-POST /api/auth/signin
+
+
+#### POST /api/auth/signin
 Login to existing account.
-POST /api/auth/google
+
+#### POST /api/auth/google
 Authenticate with Google OAuth.
-GET /api/auth/me
+
+#### GET /api/auth/me
 Get current user profile (requires auth).
 
-Node Endpoints
-GET /api/pnodes
+
+
+### Node Endpoints
+
+#### GET /api/pnodes
 Get all pNodes with optional filtering.
-Query Parameters:
 
-status - Filter by status (online/offline/degraded)
-limit - Number of results (default: 100)
-skip - Pagination offset
-sort - Sort field (e.g., -reputationScore)
+. *Query Parameters:*
+. status - Filter by status (online/offline/degraded)
+. limit - Number of results (default: 100)
+. skip - Pagination offset
+. sort - Sort field (e.g., -reputationScore)
 
-Response:
+*Response:*
 json{
   "success": true,
   "count": 50,
@@ -456,33 +522,48 @@ json{
     }
   ]
 }
-GET /api/pnodes/:nodeId
+#### GET /api/pnodes/:nodeId
 Get detailed information for a specific node (optimized with timeouts).
-GET /api/pnodes/stats/network
+
+#### GET /api/pnodes/stats/network
 Get network-wide statistics.
-GET /api/pnodes/leaderboard/top
+
+#### GET /api/pnodes/leaderboard/top
 Get top-ranked nodes.
-GET /api/pnodes/map/data
+
+#### GET /api/pnodes/map/data
 Get node location data for map visualization.
 
-Watchlist Endpoints
-POST /api/watchlist
+
+
+### Watchlist Endpoints
+
+#### POST /api/watchlist
 Add a node to user's watchlist (requires auth).
-Request:
+
+*Request:*
 json{
   "nodeId": "node-public-key"
 }
-DELETE /api/watchlist
+
+
+#### DELETE /api/watchlist
 Remove a node from watchlist (requires auth).
-GET /api/watchlist
+
+#### GET /api/watchlist
 Get user's watchlist with node details (requires auth).
 
-Alert Endpoints
-GET /api/alerts
+
+
+### Alert Endpoints
+
+#### GET /api/alerts
 Get all alerts for a user.
-POST /api/alerts/subscribe
+
+#### POST /api/alerts/subscribe
 Create a new alert.
-Request:
+
+*Request:*
 json{
   "type": "node_offline",
   "nodeId": "optional-node-id",
@@ -491,15 +572,22 @@ json{
     "webhook": "https://your-webhook-url.com"
   }
 }
-PATCH /api/alerts/:alertId/toggle
+
+
+#### PATCH /api/alerts/:alertId/toggle
 Enable/disable an alert.
-DELETE /api/alerts/:alertId
+
+#### DELETE /api/alerts/:alertId
 Delete an alert.
 
-Admin Endpoints (NEW)
-POST /api/admin/update-percentiles
+
+
+### Admin Endpoints 
+
+#### POST /api/admin/update-percentiles
 Manually trigger SLA percentile recalculation (requires auth).
-Response:
+
+*Response:*
 json{
   "success": true,
   "message": "Updated 150 nodes with accurate data",
@@ -509,159 +597,177 @@ json{
   }
 }
 
-Metrics Endpoints
-GET /api/metrics/:nodeId
+
+
+### Metrics Endpoints
+
+#### GET /api/metrics/:nodeId
 Get historical metrics for a node.
-Query Parameters:
 
-timeframe - 1h, 24h, 7d, 30d
-limit - Number of data points
+*Query Parameters:*
+. timeframe - 1h, 24h, 7d, 30d
+. limit - Number of data points
 
-GET /api/metrics/network/aggregate
+#### GET /api/metrics/network/aggregate
 Get aggregated network metrics over time.
 
-⚡ Performance Optimization
-Backend Optimizations
-
-SLA Percentile Caching
-
-Calculates all percentiles once
-Caches for 5 minutes
-Auto-refresh after gossip updates
-Reduces calculation time from 5s to < 100ms
-
-
-Database Indexing
-
-Indexed queries on nodeId, status, reputationScore
-TTL index on metrics (auto-delete after 30 days)
-Compound indexes for common queries
-
-
-Request Timeouts
-
-Node profile loads: 2s timeout
-Fallback to cached/stored values
-No more hanging requests
-
-
-Uptime Capping
-
-All uptime percentages capped at 100%
-Prevents display errors
-Validates calculations
-
-
-
-Frontend Optimizations
-
-Data Caching
-
-AppContext caches network stats for 5 minutes
-usePNodes hook caches node lists for 2 minutes
-Reduces unnecessary API calls
-
-
-Lazy Loading
-
-Components load on demand
-Reduces initial bundle size
-Faster page loads
-
-
-WebSocket Updates
-
-Real-time data without polling
-Efficient bandwidth usage
-Instant updates
 
 
 
 
-🔐 Security Features
+## ⚡ Performance Optimization
 
-JWT-based authentication with 7-day expiry
-Password hashing with bcrypt (10 rounds)
-Protected API routes with middleware
-Input validation and sanitization
-Rate limiting on all endpoints (100 req/15min)
-CORS protection
-Secure cookie handling
-No localStorage for sensitive data
+### Backend Optimizations
 
 
-🐛 Troubleshooting
-Common Issues
-MongoDB Connection Error
+### SLA Percentile Caching
+
+. Calculates all percentiles once
+. Caches for 5 minutes
+. Auto-refresh after gossip updates
+. Reduces calculation time from 5s to < 100ms
+
+
+### Database Indexing
+
+. Indexed queries on nodeId, status, reputationScore
+. TTL index on metrics (auto-delete after 30 days)
+. Compound indexes for common queries
+
+
+### Request Timeouts
+
+. Node profile loads: 2s timeout
+. Fallback to cached/stored values
+. No more hanging requests
+
+
+### Uptime Capping
+
+. All uptime percentages capped at 100%
+. Prevents display errors
+. Validates calculations
+
+
+
+### Frontend Optimizations
+
+
+### Data Caching
+
+. AppContext caches network stats for 5 minutes
+. usePNodes hook caches node lists for 2 minutes
+. Reduces unnecessary API calls
+
+
+### Lazy Loading
+
+. Components load on demand
+. Reduces initial bundle size
+. Faster page loads
+
+
+### WebSocket Updates
+
+. Real-time data without polling
+. Efficient bandwidth usage
+. Instant updates
+
+
+
+
+
+## 🔐 Security Features
+
+. JWT-based authentication with 7-day expiry
+. Password hashing with bcrypt (10 rounds)
+. Protected API routes with middleware
+. Input validation and sanitization
+. Rate limiting on all endpoints (100 req/15min)
+. CORS protection
+. Secure cookie handling
+. No localStorage for sensitive data
+
+
+
+
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+#### MongoDB Connection Error
+
 Error: connect ECONNREFUSED 127.0.0.1:27017
-Solution: Make sure MongoDB is running:
-bashmongod
-Port Already in Use
+
+*Solution:* Make sure MongoDB is running:
+bash
+mongod
+
+
+#### Port Already in Use
+
 Error: listen EADDRINUSE: address already in use :::5000
-Solution: Kill the process using the port:
-bash# Windows
+
+*Solution:* Kill the process using the port:
+bash
+# Windows
 netstat -ano | findstr :5000
 taskkill /PID <PID> /F
 
 # Mac/Linux
 lsof -ti:5000 | xargs kill -9
-CORS Error in Browser
+
+
+#### CORS Error in Browser
 Access to XMLHttpRequest has been blocked by CORS policy
-Solution: Check that REACT_APP_API_URL in frontend .env matches your backend URL.
-JWT Token Expired
-Solution: Clear localStorage and login again:
-javascriptlocalStorage.removeItem('token')
-Google OAuth Not Working
-Solution:
 
-Verify GOOGLE_CLIENT_ID matches in both frontend and backend
-Check authorized redirect URIs in Google Cloud Console
-Ensure Google+ API is enabled
+*Solution:* Check that REACT_APP_API_URL in frontend .env matches your backend URL.
 
-No Nodes Showing
+#### JWT Token Expired
+*Solution:* Clear localStorage and login again:
+javascript
+localStorage.removeItem('token')
 
-Check KNOWN_PNODES environment variable (ensure port is :6000)
-Verify pNode endpoints are accessible
-Check backend logs for gossip fetch errors
-Ensure MongoDB is running and connected
 
-SLA Percentile Always 0%
-Solution: Run the initial percentile calculation:
-bashcd backend
-node updatePercentiles.js
-Watchlist Button Not Working
-Solution:
+#### Google OAuth Not Working
+*Solution:*
+1. Verify GOOGLE_CLIENT_ID matches in both frontend and backend
+2. Check authorized redirect URIs in Google Cloud Console
+3. Ensure Google+ API is enabled
 
-Ensure you're logged in (check for token in localStorage)
-Check browser console for authentication errors
-Verify backend is running and accessible
-Clear browser cache and reload
 
-Uptime Shows > 100%
-Solution: This was fixed in the latest version. Update your files and restart:
-bashgit pull origin main
-cd backend && npm start
-cd ../frontend && npm start
+#### No Nodes Showing
+1. Check KNOWN_PNODES environment variable (ensure port is :6000)
+2. Verify pNode endpoints are accessible
+3. Check backend logs for gossip fetch errors
+4. Ensure MongoDB is running and connected
 
-🧪 Testing
-Manual Testing Checklist
 
- User registration and login
- Google OAuth login
- Dashboard loads with correct statistics
- Network map displays nodes
- Leaderboard shows ranked nodes
- All Nodes table loads and filters work
- Node profile page displays correctly
- Watchlist add/remove functionality
- Alert creation and management
- Theme toggle works (light/dark)
- WebSocket real-time updates
- SLA percentiles show non-zero values
- Uptime never exceeds 100%
 
-API Testing with cURL
-bash# Test signup
+
+
+## 🧪 Testing
+
+### Manual Testing Checklist
+
+. [] User registration and login
+. [] Google OAuth login
+. [] Dashboard loads with correct statistics
+. [] Network map displays nodes
+. [] Leaderboard shows ranked nodes
+. [] All Nodes table loads and filters work
+. [] Node profile page displays correctly
+. [] Watchlist add/remove functionality
+. [] Alert creation and management
+. [] Theme toggle works (light/dark)
+. [] WebSocket real-time updates
+
+
+### API Testing with cURL
+
+bash
+# Test signup
 curl -X POST http://localhost:5000/api/auth/signup \
   -H "Content-Type: application/json" \
   -d '{"name":"Test User","email":"test@test.com","password":"test123"}'
@@ -679,56 +785,71 @@ curl http://localhost:5000/api/pnodes \
 curl -X POST http://localhost:5000/api/admin/update-percentiles \
   -H "Authorization: Bearer YOUR_TOKEN_HERE"
 
-🤝 Contributing
+
+
+
+
+
+## 🤝 Contributing
+
 We welcome contributions! Please follow these steps:
 
-Fork the repository
-Create a feature branch
+1. *Fork the repository*
+2. *Create a feature branch*
+bash 
+git checkout -b feature/amazing-feature
 
-bash   git checkout -b feature/amazing-feature
+3. *Make your changes*
+4. *Commit with descriptive messages*
+bash   
+git commit -m "Add amazing feature"
 
-Make your changes
-Commit with descriptive messages
+5. *Push to your branch*
+bash   
+git push origin feature/amazing-feature
 
-bash   git commit -m "Add amazing feature"
-
-Push to your branch
-
-bash   git push origin feature/amazing-feature
-
-Open a Pull Request
-
-Code Style Guidelines
-
-Use ES6+ syntax
-Follow Airbnb style guide for JavaScript
-Use meaningful variable and function names
-Add comments for complex logic
-Keep functions small and focused
-Write tests for new features
+6. *Open a Pull Request*
 
 
-👥 Authors
+### Code Style Guidelines
+
+. Use ES6+ syntax
+. Follow Airbnb style guide for JavaScript
+. Use meaningful variable and function names
+. Add comments for complex logic
+. Keep functions small and focused
+
+
+
+
+## 👥 Author
 
 Emmy - Initial work - @Emmythefirst
 
 
-🙏 Acknowledgments
-
-Xandeum team for the decentralized storage network
-React and Node.js communities
-All contributors and testers
 
 
-📞 Support
+## 🙏 Acknowledgments
+
+. Xandeum team for the decentralized storage network
+. React and Node.js communities
+. All contributors and testers
+
+
+
+
+## 📞 Support
+
 For support, please:
+. Open an issue on GitHub
+. Contact: ehonemmanuel7@gmail.com
 
-Open an issue on GitHub
-Contact: ehonemmanuel7@gmail.com
 
 
-🗺️ Roadmap
-Completed Features ✅
+
+## 🗺️ Roadmap
+
+### Completed Features ✅
 
  Dark/Light theme support with localStorage
  SLA percentile calculation with caching
@@ -738,4 +859,5 @@ Completed Features ✅
  Performance optimizations
 
 
-Built with ❤️ for the Xandeum community
+
+*Built with ❤️ for the Xandeum community*
