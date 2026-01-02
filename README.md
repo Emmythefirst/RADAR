@@ -80,6 +80,7 @@ RADAR is a comprehensive analytics and monitoring platform for the Xandeum decen
 - Uptime history (24h, 7d, 30d)
 - SLA percentile ranking
 - Performance trends and badges
+- Context-aware navigation
 
 ### Watchlist
 - Persistent user watchlist
@@ -159,6 +160,7 @@ Frontend
 	•	React Router 6
 	•	Recharts
 	•	Leaflet
+	•	Lucide React
 	•	Axios
 	•	Socket.io Client
 
@@ -171,6 +173,11 @@ Backend
 	•	JWT
 	•	Winston
 	•	Node-cron
+
+Additional Tools
+	•	Google OAuth 2.0
+	•	Express Rate Limit
+	•	Bcrypt
 
 ⸻
 
@@ -207,12 +214,23 @@ Backend .env
 PORT=5000
 NODE_ENV=development
 MONGODB_URI=mongodb://localhost:27017/xandeum-analytics
-JWT_SECRET=your-secret-key
+JWT_SECRET=your-super-secret-key
+
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+
+KNOWN_PNODES=http://node1.xandeum.io:6000,http://node2.xandeum.io:6000
+
+RATE_LIMIT_WINDOW_MS=900000
+RATE_LIMIT_MAX_REQUESTS=100
+
+LOG_LEVEL=info
 
 Frontend .env
 
 REACT_APP_API_URL=http://localhost:5000/api
 REACT_APP_WS_URL=ws://localhost:5000
+REACT_APP_GOOGLE_CLIENT_ID=your-google-client-id
 
 
 ⸻
@@ -232,12 +250,12 @@ Open: http://localhost:3000
 ⸻
 
 Initial Setup
-	1.	Start MongoDB
+	1.	Start MongoDB:
 
 mongod
 
-	2.	Create an account via the web UI
-	3.	Begin monitoring nodes
+	2.	Create an account (Email or Google OAuth)
+	3.	Start monitoring pNodes
 
 ⸻
 
@@ -246,52 +264,91 @@ Project Structure
 RADAR/
 ├── backend/
 │   ├── config/
+│   │   └── db.js                 # MongoDB connection
 │   ├── middleware/
+│   │   ├── authMiddleware.js     # JWT authentication (fixed userId)
+│   │   ├── errorHandler.js       # Error handling
+│   │   └── rateLimiter.js        # API rate limiting
 │   ├── models/
+│   │   ├── Alert.js              # Alert schema
+│   │   ├── Metric.js             # Metrics schema (with TTL)
+│   │   ├── PNode.js              # Node schema
+│   │   └── User.js               # User schema
 │   ├── routes/
+│   │   ├── alerts.js             # Alert endpoints
+│   │   ├── auth.js               # Authentication endpoints
+│   │   ├── metrics.js            # Metrics endpoints
+│   │   ├── pnodes.js             # Node endpoints (optimized)
+│   │   ├── watchlist.js          # Watchlist endpoints (fixed)
+│   │   └── admin.js              # Admin endpoints
 │   ├── services/
+│   │   ├── alertService.js       # Alert processing
+│   │   ├── gossipService.js      # Node data fetching
+│   │   ├── metricsCollector.js   # Metrics aggregation
+│   │   ├── prpcService.js        # pRPC communication
+│   │   └── uptimeService.js      # SLA calculations
 │   ├── utils/
-│   └── server.js
+│   │   ├── geoLocation.js        # IP geolocation
+│   │   ├── logger.js             # Winston logger
+│   │   ├── reputationScore.js    # Scoring algorithm
+│   │   └── slaPercentile.js      # Hybrid SLA ranking
+│   ├── jobs/
+│   │   └── scheduledTasks.js     # Cron jobs (30s intervals)
+│   ├── updatePercentiles.js      # Manual percentile update script
+│   ├── .env
+│   ├── server.js                 # Entry point
+│   └── package.json
+│
 ├── frontend/
 │   ├── public/
-│   └── src/
+│   │   ├── index.html
+│   │   └── favicon.ico
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── AlertManager/
+│   │   │   ├── Auth/
+│   │   │   ├── Dashboard/
+│   │   │   ├── HealthPieChart/
+│   │   │   ├── Leaderboard/
+│   │   │   ├── MetricsChart/
+│   │   │   ├── Navbar/
+│   │   │   ├── NodeBadges/
+│   │   │   ├── NodeProfile/
+│   │   │   ├── NodeTable/
+│   │   │   ├── SLAHistory/
+│   │   │   ├── StorageWeatherMap/
+│   │   │   └── Watchlist/
+│   │   ├── contexts/
+│   │   │   ├── AppContext.js
+│   │   │   ├── AuthContext.js
+│   │   │   └── ThemeContext.js
+│   │   ├── hooks/
+│   │   │   └── usePNodes.js
+│   │   ├── services/
+│   │   │   └── api.js
+│   │   ├── utils/
+│   │   │   ├── badgeToEmoji.js
+│   │   │   ├── formatters.js
+│   │   │   ├── sla.js
+│   │   │   └── uptimeBadge.js
+│   │   ├── App.jsx
+│   │   ├── App.css
+│   │   ├── index.js
+│   │   ├── index.css
+│   │   └── theme.css
+│   ├── .env
+│   └── package.json
+│
+├── .gitignore
 ├── README.md
-└── .gitignore
 
-
-⸻
-
-API Documentation
-
-Authentication
-	•	POST /api/auth/signup
-	•	POST /api/auth/signin
-	•	POST /api/auth/google
-	•	GET /api/auth/me
-
-Nodes
-	•	GET /api/pnodes
-	•	GET /api/pnodes/:nodeId
-	•	GET /api/pnodes/stats/network
-	•	GET /api/pnodes/leaderboard/top
-
-Watchlist
-	•	POST /api/watchlist
-	•	DELETE /api/watchlist
-	•	GET /api/watchlist
-
-Alerts
-	•	GET /api/alerts
-	•	POST /api/alerts/subscribe
-	•	PATCH /api/alerts/:id/toggle
-	•	DELETE /api/alerts/:id
 
 ⸻
 
 Performance Optimization
-	•	SLA percentile caching
+	•	SLA percentile caching (5 minutes)
 	•	Indexed MongoDB queries
-	•	TTL-based metric cleanup
+	•	TTL cleanup for metrics
 	•	WebSocket real-time updates
 	•	Frontend data caching
 
@@ -327,6 +384,7 @@ Manual Checklist
 	•	Map renders nodes
 	•	Watchlist functions
 	•	Alerts trigger
+	•	Theme toggle works
 
 ⸻
 
@@ -349,12 +407,13 @@ Emmy – @Emmythefirst
 
 Acknowledgments
 	•	Xandeum team
-	•	React & Node.js communities
+	•	React and Node.js communities
+	•	All contributors and testers
 
 ⸻
 
 Support
-	•	Open a GitHub issue
+	•	Open an issue on GitHub
 	•	Email: ehonemmanuel7@gmail.com
 
 ⸻
@@ -363,10 +422,13 @@ Roadmap
 
 Completed
 	•	Dark/Light theme
-	•	SLA caching
+	•	SLA percentile caching
+	•	Uptime capping at 100%
 	•	Watchlist fixes
 	•	Performance optimizations
 
 ⸻
 
 Built with ❤️ for the Xandeum community
+
+---
