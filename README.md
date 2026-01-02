@@ -4,6 +4,7 @@
 
 Real-time monitoring and analytics dashboard for Xandeum's decentralized storage network
 
+
 ## 📋 Table of Contents
 
 - [Overview](#overview)
@@ -25,6 +26,8 @@ Real-time monitoring and analytics dashboard for Xandeum's decentralized storage
 - [Acknowledgments](#acknowledgments)
 - [Roadmap](#roadmap)
 
+
+
 ## 🌟 Overview
 
 RADAR is a comprehensive analytics and monitoring platform for the Xandeum decentralized storage network. It provides real-time insights into pNode (personal node) performance, network health, storage capacity, and SLA compliance tracking.
@@ -39,6 +42,9 @@ RADAR is a comprehensive analytics and monitoring platform for the Xandeum decen
 - ⭐ **Watchlist Feature** - Save and track your favorite nodes
 - 🔐 **Authentication** - Secure user accounts with Google OAuth support
 - 🌗 **Dark/Light Theme** - Beautiful beige light mode and dark slate mode with smooth transitions
+
+
+
 
 ## ✨ Features
 
@@ -112,6 +118,9 @@ RADAR is a comprehensive analytics and monitoring platform for the Xandeum decen
 - Protected routes and API endpoints
 - Session persistence
 
+
+
+
 ## 🎨 Features in Detail
 
 ### Reputation Scoring Algorithm
@@ -133,6 +142,7 @@ Components:
 · Availability (20%) - Current online status
 · Longevity (15%) - Time since node joined network
 
+
 SLA Percentile System
 
 Fast Hybrid Calculation:
@@ -141,6 +151,7 @@ Fast Hybrid Calculation:
 · Automatic cache refresh every 5 minutes
 · Manual recalculation via admin endpoint
 · Based on stored uptime values for performance
+
 
 Accuracy Mode (Manual Updates):
 
@@ -154,6 +165,7 @@ node updatePercentiles.js
 · Stores accurate percentiles in database
 · Recommended: Run weekly for fresh data
 
+
 Badge System
 
 Nodes earn badges based on performance:
@@ -161,6 +173,7 @@ Nodes earn badges based on performance:
 · 🟢 High Reputation - 99.9%+ uptime
 · 🏆 Top 1% - In top 1% of all nodes by SLA percentile
 · ✅ Trusted Node - Verified operator
+
 
 SLA Tiers
 
@@ -170,6 +183,7 @@ Nodes are classified into tiers:
 · 🥈 SILVER - 99.5%+ uptime
 · 🥉 BRONZE - 99.0%+ uptime
 
+
 Theme Support
 
 RADAR supports both dark and light themes:
@@ -177,6 +191,9 @@ RADAR supports both dark and light themes:
 · Toggle in navbar with sun/moon icon
 · Preference saved to localStorage
 · Smooth transitions between themes
+
+
+
 
 🛠️ Tech Stack
 
@@ -220,6 +237,8 @@ Optional
 
 · MongoDB Compass - GUI for MongoDB (Download)
 
+
+
 🚀 Installation
 
 1. Clone the Repository
@@ -242,6 +261,8 @@ npm install
 cd ../frontend
 npm install
 ```
+
+
 
 ⚙️ Configuration
 
@@ -275,6 +296,8 @@ RATE_LIMIT_MAX_REQUESTS=100
 LOG_LEVEL=info
 ```
 
+
+
 Frontend Environment Variables
 
 Create a .env file in the frontend directory:
@@ -295,6 +318,9 @@ Setting Up Google OAuth (Optional)
    · http://localhost:3000
    · Your production URL
 6. Copy Client ID and Client Secret to .env files
+
+
+
 
 🏃 Running the Application
 
@@ -343,6 +369,10 @@ Step 2: Create Your First Account
 2. Click "Sign Up" in the navbar
 3. Create an account or use Google OAuth
 4. Start exploring!
+
+
+
+
 
 📁 Project Structure
 
@@ -429,6 +459,8 @@ RADAR/
 └── README.md
 ```
 
+
+
 📡 API Documentation
 
 Authentication Endpoints
@@ -468,11 +500,13 @@ Login to existing account.
 
 POST /api/auth/google
 
+
 Authenticate with Google OAuth.
 
 GET /api/auth/me
 
 Get current user profile (requires auth).
+
 
 Node Endpoints
 
@@ -535,6 +569,7 @@ GET /api/pnodes/map/data
 
 Get node location data for map visualization.
 
+
 Watchlist Endpoints
 
 POST /api/watchlist
@@ -556,6 +591,7 @@ Remove a node from watchlist (requires auth).
 GET /api/watchlist
 
 Get user's watchlist with node details (requires auth).
+
 
 Alert Endpoints
 
@@ -588,6 +624,7 @@ DELETE /api/alerts/:alertId
 
 Delete an alert.
 
+
 Admin Endpoints
 
 POST /api/admin/update-percentiles
@@ -607,6 +644,7 @@ Response:
 }
 ```
 
+
 Metrics Endpoints
 
 GET /api/metrics/:nodeId
@@ -621,6 +659,10 @@ Query Parameters:
 GET /api/metrics/network/aggregate
 
 Get aggregated network metrics over time.
+
+
+
+
 
 ⚡ Performance Optimization
 
@@ -651,6 +693,7 @@ Uptime Capping
 · Prevents display errors
 · Validates calculations
 
+
 Frontend Optimizations
 
 Data Caching
@@ -671,6 +714,9 @@ WebSocket Updates
 · Efficient bandwidth usage
 · Instant updates
 
+
+
+
 🔐 Security Features
 
 · JWT-based authentication with 7-day expiry
@@ -681,6 +727,10 @@ WebSocket Updates
 · CORS protection
 · Secure cookie handling
 · No localStorage for sensitive data
+
+
+
+
 
 🐛 Troubleshooting
 
@@ -727,6 +777,7 @@ Access to XMLHttpRequest has been blocked by CORS policy
 
 Solution: Check that REACT_APP_API_URL in frontend .env matches your backend URL.
 
+
 JWT Token Expired
 
 Solution: Clear localStorage and login again:
@@ -734,6 +785,7 @@ Solution: Clear localStorage and login again:
 ```javascript
 localStorage.removeItem('token')
 ```
+
 
 Google OAuth Not Working
 
@@ -743,12 +795,17 @@ Solution:
 2. Check authorized redirect URIs in Google Cloud Console
 3. Ensure Google+ API is enabled
 
+
 No Nodes Showing
 
 1. Check KNOWN_PNODES environment variable (ensure port is :6000)
 2. Verify pNode endpoints are accessible
 3. Check backend logs for gossip fetch errors
 4. Ensure MongoDB is running and connected
+
+
+
+
 
 🧪 Testing
 
@@ -788,6 +845,10 @@ curl -X POST http://localhost:5000/api/admin/update-percentiles \
   -H "Authorization: Bearer YOUR_TOKEN_HERE"
 ```
 
+
+
+
+
 🤝 Contributing
 
 We welcome contributions! Please follow these steps:
@@ -808,6 +869,7 @@ We welcome contributions! Please follow these steps:
    ```
 6. Open a Pull Request
 
+
 Code Style Guidelines
 
 · Use ES6+ syntax
@@ -816,9 +878,17 @@ Code Style Guidelines
 · Add comments for complex logic
 · Keep functions small and focused
 
+
+
+
+
 👥 Author
 
 Emmy - Initial work - @Emmythefirst
+
+
+
+
 
 🙏 Acknowledgments
 
@@ -826,12 +896,20 @@ Emmy - Initial work - @Emmythefirst
 · React and Node.js communities
 · All contributors and testers
 
+
+
+
+
 📞 Support
 
 For support, please:
 
 · Open an issue on GitHub
 · Contact: ehonemmanuel7@gmail.com
+
+
+
+
 
 🗺️ Roadmap
 
