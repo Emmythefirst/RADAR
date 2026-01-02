@@ -1,9 +1,9 @@
-
 ```markdown
 # 🎯 RADAR - Xandeum pNode Analytics Platform
 
 Real-time monitoring and analytics dashboard for Xandeum's decentralized storage network
 
+---
 
 ## 📋 Table of Contents
 
@@ -26,7 +26,7 @@ Real-time monitoring and analytics dashboard for Xandeum's decentralized storage
 - [Acknowledgments](#acknowledgments)
 - [Roadmap](#roadmap)
 
-
+---
 
 ## 🌟 Overview
 
@@ -43,8 +43,7 @@ RADAR is a comprehensive analytics and monitoring platform for the Xandeum decen
 - 🔐 **Authentication** - Secure user accounts with Google OAuth support
 - 🌗 **Dark/Light Theme** - Beautiful beige light mode and dark slate mode with smooth transitions
 
-
-
+---
 
 ## ✨ Features
 
@@ -118,12 +117,11 @@ RADAR is a comprehensive analytics and monitoring platform for the Xandeum decen
 - Protected routes and API endpoints
 - Session persistence
 
-
-
+---
 
 ## 🎨 Features in Detail
 
-### Reputation Scoring Algorithm
+### 🔢 Reputation Scoring Algorithm
 
 Nodes are scored based on multiple factors:
 
@@ -142,8 +140,7 @@ Components:
 · Availability (20%) - Current online status
 · Longevity (15%) - Time since node joined network
 
-
-SLA Percentile System
+📊 SLA Percentile System
 
 Fast Hybrid Calculation:
 
@@ -151,7 +148,6 @@ Fast Hybrid Calculation:
 · Automatic cache refresh every 5 minutes
 · Manual recalculation via admin endpoint
 · Based on stored uptime values for performance
-
 
 Accuracy Mode (Manual Updates):
 
@@ -165,8 +161,7 @@ node updatePercentiles.js
 · Stores accurate percentiles in database
 · Recommended: Run weekly for fresh data
 
-
-Badge System
+🏅 Badge System
 
 Nodes earn badges based on performance:
 
@@ -174,8 +169,7 @@ Nodes earn badges based on performance:
 · 🏆 Top 1% - In top 1% of all nodes by SLA percentile
 · ✅ Trusted Node - Verified operator
 
-
-SLA Tiers
+🥇 SLA Tiers
 
 Nodes are classified into tiers:
 
@@ -183,8 +177,7 @@ Nodes are classified into tiers:
 · 🥈 SILVER - 99.5%+ uptime
 · 🥉 BRONZE - 99.0%+ uptime
 
-
-Theme Support
+🌗 Theme Support
 
 RADAR supports both dark and light themes:
 
@@ -192,8 +185,7 @@ RADAR supports both dark and light themes:
 · Preference saved to localStorage
 · Smooth transitions between themes
 
-
-
+---
 
 🛠️ Tech Stack
 
@@ -224,6 +216,8 @@ Additional Tools
 · Express Rate Limit - API rate limiting
 · Bcrypt - Password hashing
 
+---
+
 📦 Prerequisites
 
 Before you begin, ensure you have the following installed:
@@ -237,7 +231,7 @@ Optional
 
 · MongoDB Compass - GUI for MongoDB (Download)
 
-
+---
 
 🚀 Installation
 
@@ -262,7 +256,7 @@ cd ../frontend
 npm install
 ```
 
-
+---
 
 ⚙️ Configuration
 
@@ -296,8 +290,6 @@ RATE_LIMIT_MAX_REQUESTS=100
 LOG_LEVEL=info
 ```
 
-
-
 Frontend Environment Variables
 
 Create a .env file in the frontend directory:
@@ -319,8 +311,7 @@ Setting Up Google OAuth (Optional)
    · Your production URL
 6. Copy Client ID and Client Secret to .env files
 
-
-
+---
 
 🏃 Running the Application
 
@@ -348,9 +339,12 @@ npm start
 
 The application will open at http://localhost:3000
 
+---
+
 🔧 Initial Setup
 
 Step 1: Verify Backend Connection
+
 Once the backend starts, you should see:
 
 ```
@@ -370,9 +364,7 @@ Step 2: Create Your First Account
 3. Create an account or use Google OAuth
 4. Start exploring!
 
-
-
-
+---
 
 📁 Project Structure
 
@@ -382,7 +374,7 @@ RADAR/
 │   ├── config/
 │   │   └── db.js                 # MongoDB connection
 │   ├── middleware/
-│   │   ├── authMiddleware.js     # JWT authentication (fixed userId)
+│   │   ├── authMiddleware.js     # JWT authentication
 │   │   ├── errorHandler.js       # Error handling
 │   │   └── rateLimiter.js        # API rate limiting
 │   ├── models/
@@ -394,25 +386,25 @@ RADAR/
 │   │   ├── alerts.js             # Alert endpoints
 │   │   ├── auth.js               # Authentication endpoints
 │   │   ├── metrics.js            # Metrics endpoints
-│   │   ├── pnodes.js             # Node endpoints (optimized)
-│   │   ├── watchlist.js          # Watchlist endpoints (fixed)
-│   │   └── admin.js              # Admin endpoints (NEW)
+│   │   ├── pnodes.js             # Node endpoints
+│   │   ├── watchlist.js          # Watchlist endpoints 
+│   │   └── admin.js              # Admin endpoints 
 │   ├── services/
 │   │   ├── alertService.js       # Alert processing
-│   │   ├── gossipService.js      # Node data fetching (optimized)
+│   │   ├── gossipService.js      # Node data fetching 
 │   │   ├── metricsCollector.js   # Metrics aggregation
 │   │   ├── prpcService.js        # pRPC communication
-│   │   └── uptimeService.js      # SLA calculations (capped at 100%)
+│   │   └── uptimeService.js      # SLA calculations 
 │   ├── utils/
 │   │   ├── geoLocation.js        # IP geolocation
 │   │   ├── logger.js             # Winston logger
 │   │   ├── reputationScore.js    # Scoring algorithm
-│   │   └── slaPercentile.js      # Hybrid SLA ranking (NEW)
+│   │   └── slaPercentile.js      # Hybrid SLA ranking
 │   ├── jobs/
 │   │   └── scheduledTasks.js     # Cron jobs (30s intervals)
-│   ├── updatePercentiles.js      # Manual percentile update script (NEW)
+│   ├── updatePercentiles.js      # Manual percentile update script 
 │   ├── .env
-│   ├── server.js                 # Entry point (with admin routes)
+│   ├── server.js                 # Entry point 
 │   └── package.json
 │
 ├── frontend/
@@ -429,14 +421,14 @@ RADAR/
 │   │   │   ├── MetricsChart/
 │   │   │   ├── Navbar/
 │   │   │   ├── NodeBadges/
-│   │   │   ├── NodeProfile/     # With light mode support
+│   │   │   ├── NodeProfile/     
 │   │   │   ├── NodeTable/
 │   │   │   ├── SLAHistory/
 │   │   │   ├── StorageWeatherMap/
-│   │   │   └── Watchlist/        # Fixed navigation & light mode
+│   │   │   └── Watchlist/        
 │   │   ├── contexts/
 │   │   │   ├── AppContext.js     # Global app state (with caching)
-│   │   │   ├── AuthContext.js    # Authentication state (fixed)
+│   │   │   ├── AuthContext.js    # Authentication state 
 │   │   │   └── ThemeContext.js   # Dark/light theme
 │   │   ├── hooks/
 │   │   │   └── usePNodes.js      # Custom hook for nodes (cached)
@@ -444,7 +436,7 @@ RADAR/
 │   │   │   └── api.js            # Axios instance
 │   │   ├── utils/
 │   │   │   ├── badgeToEmoji.js
-│   │   │   ├── formatters.js     # With 100% uptime cap
+│   │   │   ├── formatters.js     
 │   │   │   ├── sla.js
 │   │   │   └── uptimeBadge.js
 │   │   ├── App.jsx
@@ -459,7 +451,7 @@ RADAR/
 └── README.md
 ```
 
-
+---
 
 📡 API Documentation
 
@@ -500,13 +492,11 @@ Login to existing account.
 
 POST /api/auth/google
 
-
 Authenticate with Google OAuth.
 
 GET /api/auth/me
 
 Get current user profile (requires auth).
-
 
 Node Endpoints
 
@@ -569,7 +559,6 @@ GET /api/pnodes/map/data
 
 Get node location data for map visualization.
 
-
 Watchlist Endpoints
 
 POST /api/watchlist
@@ -591,7 +580,6 @@ Remove a node from watchlist (requires auth).
 GET /api/watchlist
 
 Get user's watchlist with node details (requires auth).
-
 
 Alert Endpoints
 
@@ -624,7 +612,6 @@ DELETE /api/alerts/:alertId
 
 Delete an alert.
 
-
 Admin Endpoints
 
 POST /api/admin/update-percentiles
@@ -644,7 +631,6 @@ Response:
 }
 ```
 
-
 Metrics Endpoints
 
 GET /api/metrics/:nodeId
@@ -660,9 +646,7 @@ GET /api/metrics/network/aggregate
 
 Get aggregated network metrics over time.
 
-
-
-
+---
 
 ⚡ Performance Optimization
 
@@ -693,7 +677,6 @@ Uptime Capping
 · Prevents display errors
 · Validates calculations
 
-
 Frontend Optimizations
 
 Data Caching
@@ -714,8 +697,7 @@ WebSocket Updates
 · Efficient bandwidth usage
 · Instant updates
 
-
-
+---
 
 🔐 Security Features
 
@@ -728,9 +710,7 @@ WebSocket Updates
 · Secure cookie handling
 · No localStorage for sensitive data
 
-
-
-
+---
 
 🐛 Troubleshooting
 
@@ -777,7 +757,6 @@ Access to XMLHttpRequest has been blocked by CORS policy
 
 Solution: Check that REACT_APP_API_URL in frontend .env matches your backend URL.
 
-
 JWT Token Expired
 
 Solution: Clear localStorage and login again:
@@ -785,7 +764,6 @@ Solution: Clear localStorage and login again:
 ```javascript
 localStorage.removeItem('token')
 ```
-
 
 Google OAuth Not Working
 
@@ -795,7 +773,6 @@ Solution:
 2. Check authorized redirect URIs in Google Cloud Console
 3. Ensure Google+ API is enabled
 
-
 No Nodes Showing
 
 1. Check KNOWN_PNODES environment variable (ensure port is :6000)
@@ -803,9 +780,7 @@ No Nodes Showing
 3. Check backend logs for gossip fetch errors
 4. Ensure MongoDB is running and connected
 
-
-
-
+---
 
 🧪 Testing
 
@@ -845,9 +820,7 @@ curl -X POST http://localhost:5000/api/admin/update-percentiles \
   -H "Authorization: Bearer YOUR_TOKEN_HERE"
 ```
 
-
-
-
+---
 
 🤝 Contributing
 
@@ -869,7 +842,6 @@ We welcome contributions! Please follow these steps:
    ```
 6. Open a Pull Request
 
-
 Code Style Guidelines
 
 · Use ES6+ syntax
@@ -878,17 +850,13 @@ Code Style Guidelines
 · Add comments for complex logic
 · Keep functions small and focused
 
-
-
-
+---
 
 👥 Author
 
 Emmy - Initial work - @Emmythefirst
 
-
-
-
+---
 
 🙏 Acknowledgments
 
@@ -896,9 +864,7 @@ Emmy - Initial work - @Emmythefirst
 · React and Node.js communities
 · All contributors and testers
 
-
-
-
+---
 
 📞 Support
 
@@ -907,9 +873,7 @@ For support, please:
 · Open an issue on GitHub
 · Contact: ehonemmanuel7@gmail.com
 
-
-
-
+---
 
 🗺️ Roadmap
 
