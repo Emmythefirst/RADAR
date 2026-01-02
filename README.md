@@ -1,4 +1,3 @@
-```markdown
 # 🎯 RADAR - Xandeum pNode Analytics Platform
 
 Real-time monitoring and analytics dashboard for Xandeum's decentralized storage network
