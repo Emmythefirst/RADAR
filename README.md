@@ -278,7 +278,7 @@ MONGODB_URI=mongodb://localhost:27017/xandeum-analytics
 # JWT Authentication
 JWT_SECRET=your-super-secret-jwt-key-min-32-characters-long
 
-# Google OAuth (Optional)
+# Google OAuth 
 GOOGLE_CLIENT_ID=your-google-client-id
 GOOGLE_CLIENT_SECRET=your-google-client-secret
 
@@ -303,7 +303,7 @@ REACT_APP_WS_URL=ws://localhost:5000
 REACT_APP_GOOGLE_CLIENT_ID=your-google-client-id
 ```
 
-### Setting Up Google OAuth (Optional)
+### Setting Up Google OAuth
 
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 1. Create a new project or select existing one
